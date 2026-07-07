@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Practice content — NEVER publish. This repo ships only the viewer + a
+# synthetic demo. All exam JSON, downloaded images, and periodic-table art
+# stay local. `content.json` is the file the viewer auto-loads locally.
+# ---------------------------------------------------------------------------
+# Ignore all JSON...
+*.json
+# ...except the one bundled, fully synthetic demo set (and any package files):
+!sample.json
+!package.json
+!package-lock.json
+
+data/
+images/
+periodic_table.jpg
+periodic_table.png
+*.network-response
+temp_*.json
+
+# ---------------------------------------------------------------------------
+# Extraction tooling — kept out of the public release.
+# ---------------------------------------------------------------------------
+clone_watcher.py
+download_images.py
+process_extraction.py
+save_temp_images.py
+__pycache__/
+*.pyc
+
+# ---------------------------------------------------------------------------
+# Dev / OS cruft
+# ---------------------------------------------------------------------------
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

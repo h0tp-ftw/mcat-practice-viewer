@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<!--
+  MCAT-Style Practice Viewer — an offline, dependency-free question viewer.
+  Copyright (C) 2026  h0tp-ftw
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published by the Free
+  Software Foundation, either version 3 of the License, or (at your option)
+  any later version. It is distributed WITHOUT ANY WARRANTY. See the bundled
+  LICENSE file, or <https://www.gnu.org/licenses/>, for the full terms.
+
+  Not affiliated with or endorsed by the AAMC. Ships with no exam content.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCAT Official Prep Hub</title>
+  <style>
+    :root {
+      /* Authentic AAMC exam theme: light content, dark chrome bars.
+         The real AAMC interface keeps the header, tool bar and footer dark
+         (navy/near-black) while the passage/question area stays light. */
+      --page-bg: #e6e9ed;      /* light-gray page / gaps */
+      --pane-bg: #ffffff;      /* white content panes */
+
+      /* AAMC blue-navy chrome bars (header / sub-navbar / footer) */
+      --bar-bg: #265a86;       /* AAMC blue-navy bar */
+      --bar-bg2: #1e4a72;      /* bar gradient bottom / borders */
+      --bar-text: #f3f6f9;     /* light text on the bars */
+      --bar-text-muted: #c2d2df;
+      --bar-border: #4a7aa3;
+      --header-text: #ffffff;
+
+      --text-main: #1a1a1a;
+      --text-muted: #5a6169;
+      --border-color: #c3ccd4;
+      --border-strong: #9aa6b0;
+
+      --choice-bg: #ffffff;
+      --choice-border: #c3ccd4;
+      --choice-hover-bg: #eef4fa;
+
+      --selected-bg: #dbebfb;
+      --selected-border: #1a73e8;
+
+      --correct-bg: #e4f4e6;
+      --correct-border: #2e7d32;
+      --correct-text: #1b5e20;
+
+      --incorrect-bg: #fdeaea;
+      --incorrect-border: #c62828;
+      --incorrect-text: #b71c1c;
+
+      --accent: #0b5c9e;
+      --accent-hover: #0a4d84;
+      --accent-bright: #3b8ed0;    /* lighter blue for use on dark bars */
+      --highlight-color: #ffe873;  /* yellow highlight, like the exam */
+      --answered-bg: #d7dde3;      /* answered marker in navigator */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--page-bg);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-size: 15px;
+    }
+
+    /* Top AAMC Header */
+    header {
+      background: linear-gradient(to bottom, var(--bar-bg), var(--bar-bg2));
+      color: var(--header-text);
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      height: 48px;
+      font-size: 0.95rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+
+    .header-left {
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .timer-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .timer-icon {
+      opacity: 0.85;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .timer-icon svg { width: 14px; height: 14px; }
+
+    /* Sharp SVG tool/utility icons (replacing emoji) */
+    .tool-icon svg { width: 18px; height: 18px; display: block; }
+    .eliminate-x svg { width: 15px; height: 15px; display: block; }
+    #review-note svg { width: 15px; height: 15px; }
+
+    .review-toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Switch Style toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 34px;
+      height: 16px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255,255,255,0.35);
+      transition: .3s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #4dd06a;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+
+    /* Header buttons sit on the dark bar -> keep them light */
+    .btn-done, .file-input-label {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.55);
+      color: #fff;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-done:hover, .file-input-label:hover {
+      background: rgba(255,255,255,0.14);
+    }
+
+    .file-input-label input { display: none; }
+
+    /* Sub-header Navigation / Tool Bar (dark, like the exam) */
+    .sub-navbar {
+      height: 48px;
+      background: var(--bar-bg);
+      border-bottom: 1px solid var(--bar-bg2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+      color: var(--bar-text-muted);
+    }
+
+    .sub-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-arrows {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    .nav-arrows span:hover {
+      color: var(--bar-text);
+    }
+
+    .progress-track {
+      width: 400px;
+      height: 8px;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-bright);
+      border-radius: 4px;
+      width: 0%;
+    }
+
+    .sub-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .tool-icon {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--bar-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      padding: 0.3rem 0.4rem;
+    }
+
+    .tool-icon:hover {
+      color: var(--bar-text);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .tool-icon.active {
+      color: #fff;
+      background: var(--accent-bright);
+      border-color: var(--accent-bright);
+    }
+
+    .btn-skip {
+      background: transparent;
+      border: 1px solid var(--bar-border);
+      color: var(--bar-text);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-skip:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Main Area layout */
+    .main-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      background: var(--page-bg);
+    }
+
+    .split-pane {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      background: var(--page-bg);
+    }
+
+    .pane {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      background: var(--pane-bg);
+    }
+
+    .passage-pane {
+      border-right: 3px solid var(--border-strong);
+    }
+
+    .passage-content {
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* AAMC CARS uses no first-line indents -- just block spacing between
+       paragraphs. Override any inline text-indent that comes in the HTML. */
+    .passage-content p {
+      text-indent: 0 !important;
+      margin: 0 0 1rem 0 !important;
+    }
+
+    .passage-content img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .passage-title {
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .question-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .question-stem {
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .question-stem p { text-indent: 0 !important; }
+
+    .question-stem img { max-width: 100%; height: auto; }
+
+    .choices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .choice-item {
+      background: var(--choice-bg);
+      border: 1px solid var(--choice-border);
+      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .choice-item:hover {
+      background: var(--choice-hover-bg);
+    }
+
+    .choice-item.selected {
+      background: var(--selected-bg);
+      border-color: var(--selected-border);
+    }
+
+    .choice-item.eliminated {
+      opacity: 0.4;
+    }
+
+    .choice-item.eliminated .choice-text {
+      text-decoration: line-through;
+    }
+
+    .choice-letter {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      color: var(--text-muted);
+    }
+
+    .choice-item.selected .choice-letter {
+      background: var(--selected-border);
+      color: white;
+      border-color: var(--selected-border);
+    }
+
+    .choice-text {
+      flex: 1;
+      line-height: 1.4;
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 14px;
+    }
+
+    .choice-text img { max-width: 100%; height: auto; vertical-align: middle; }
+
+    .eliminate-x {
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.25rem;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+      user-select: none;
+    }
+
+    .eliminate-x:hover {
+      opacity: 1;
+      color: var(--incorrect-text);
+    }
+
+    .choice-item.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+
+    .choice-item.correct .choice-letter {
+      background: var(--correct-border);
+      color: white;
+      border-color: var(--correct-border);
+    }
+
+    .choice-item.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+    }
+
+    .choice-item.incorrect .choice-letter {
+      background: var(--incorrect-border);
+      color: white;
+      border-color: var(--incorrect-border);
+    }
+
+    /* Explanation style */
+    .explanation-panel {
+      background: #f5f9fd;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      padding: 1.25rem;
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .explanation-panel img { max-width: 100%; height: auto; }
+
+    .explanation-title {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .explanation-content {
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    /* Bottom Status Footer (dark, like the exam) */
+    footer {
+      height: 56px;
+      background: var(--bar-bg);
+      color: var(--bar-text);
+      border-top: 1px solid var(--bar-bg2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 10;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #review-note {
+      color: var(--accent-bright);
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .confidence-selector {
+      display: flex;
+      border: 1px solid var(--bar-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .confidence-btn {
+      background: transparent;
+      border: none;
+      color: var(--bar-text-muted);
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      border-right: 1px solid var(--bar-border);
+    }
+
+    .confidence-btn:last-child {
+      border-right: none;
+    }
+
+    .confidence-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Confidence buttons colour-coded red / yellow / green */
+    .confidence-btn[data-level="low"]    { color: #ff9d9d; }
+    .confidence-btn[data-level="medium"] { color: #ffd27a; }
+    .confidence-btn[data-level="high"]   { color: #93e2a3; }
+
+    .confidence-btn.active { font-weight: bold; }
+    .confidence-btn.active[data-level="low"]    { background: #d64541; color: #fff; }
+    .confidence-btn.active[data-level="medium"] { background: #e6a52b; color: #1a1a1a; }
+    .confidence-btn.active[data-level="high"]   { background: #3fa34d; color: #fff; }
+
+    .footer-right {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-confirm {
+      background: var(--accent);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.5rem 1.75rem;
+      border-radius: 2px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .btn-confirm:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-confirm:disabled {
+      background: #cfd6dc;
+      color: #8a929a;
+      cursor: default;
+    }
+
+    /* Modals (Navigator, Periodic Table) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(1px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--pane-bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      width: 90%;
+      max-width: 900px;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .modal-header {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(to bottom, var(--bar-bg), var(--bar-bg2));
+      color: var(--header-text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--header-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-body {
+      flex: 1;
+      padding: 1.5rem;
+      overflow: auto;
+    }
+
+    /* Navigator Grid */
+    .navigator-legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .navigator-legend span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      border: 1px solid var(--border-strong);
+      display: inline-block;
+    }
+
+    .navigator-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .nav-grid-item {
+      aspect-ratio: 1;
+      border: 1px solid var(--border-strong);
+      background: var(--pane-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .nav-grid-item:hover {
+      background: rgba(0,0,0,0.05);
+    }
+
+    .nav-grid-item.active {
+      background: var(--selected-bg);
+      border-color: var(--selected-border);
+      box-shadow: 0 0 0 2px var(--selected-border) inset;
+    }
+
+    .nav-grid-item .flag-mark {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 11px;
+      height: 11px;
+    }
+
+    /* Default Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      color: var(--text-muted);
+      gap: 1rem;
+      padding: 2rem;
+      background: var(--pane-bg);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    mark {
+      background-color: var(--highlight-color);
+      color: #000;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Top Header -->
+  <header>
+    <div class="header-left" id="header-title">CARS Diagnostic Step 2 Practice Set</div>
+    <div class="header-right">
+      <div class="timer-container">
+        <div class="timer-item">
+          <span class="timer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg></span>
+          <span>This Question: <strong id="q-timer">00:00</strong></span>
+        </div>
+        <div class="timer-item">
+          <span class="timer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg></span>
+          <span id="total-label">Total Time:</span> <strong id="total-timer">00:00</strong>
+        </div>
+      </div>
+      <div class="review-toggle-container">
+        <span>Review Answer</span>
+        <label class="switch">
+          <input type="checkbox" id="review-switch">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <button class="btn-done" id="done-btn">End Section</button>
+      <label class="file-input-label" for="file-input">
+        Load JSON
+        <input type="file" id="file-input" accept=".json">
+      </label>
+    </div>
+  </header>
+
+  <!-- Sub-navbar Navigation -->
+  <div class="sub-navbar" id="sub-navbar" style="display: none;">
+    <div class="sub-left">
+      <div class="nav-arrows">
+        <span id="prev-arrow" title="Previous (Alt+P)">&lt;</span>
+        <span id="next-arrow" title="Next (Alt+N)">&gt;</span>
+        <span id="nav-index-text" style="font-weight: bold; font-size: 0.95rem; cursor: pointer;" title="Open Navigator (Alt+V)">1/169</span>
+      </div>
+      <div class="progress-track" id="progress-track" title="Click to jump to a question">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div class="sub-right">
+      <button class="tool-icon" id="tool-hl" title="Highlight selected text (Alt+H)" aria-label="Highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path></svg></button>
+      <button class="tool-icon" id="tool-eraser" title="Erase highlights — select text to erase, or click to clear all (Alt+E)" aria-label="Erase highlights"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"></path><path d="M22 21H7"></path><path d="m5 11 9 9"></path></svg></button>
+      <button class="tool-icon" id="tool-flag" title="Flag for Review (Alt+F)" aria-label="Flag for review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg></button>
+      <button class="tool-icon" id="tool-pt" title="Periodic Table (Alt+T)" aria-label="Periodic table"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+      <button class="btn-skip" id="skip-btn" title="Skip to next question">Skip Question</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <!-- Split Pane Quizzing Area -->
+    <div class="split-pane" id="viewer-pane" style="display: none;">
+      <div class="pane passage-pane" id="passage-pane" style="display: none;">
+        <div class="passage-title" id="passage-title">Passage 1 (7 questions)</div>
+        <div class="passage-content" id="passage-content"></div>
+      </div>
+      <div class="pane question-pane">
+        <div class="question-stem" id="question-stem"></div>
+        <div class="choices-list" id="choices-list"></div>
+        <div class="explanation-panel" id="explanation-panel">
+          <div class="explanation-title">Solution Explanation</div>
+          <div class="explanation-content" id="explanation-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro summary screen -->
+    <div class="empty-state" id="summary-pane" style="display: none; padding: 3rem;">
+      <h1 id="summary-title" style="margin-bottom: 0.5rem; font-size: 1.8rem; font-weight: 700; color: var(--accent);">Section Title</h1>
+      <p id="summary-info" style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.1rem;">This section contains 30 questions.</p>
+      <div style="max-width: 640px; text-align: left; line-height: 1.6; margin-bottom: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+        <p style="margin-bottom: 1rem;"><strong>Instructions:</strong></p>
+        <p style="margin-bottom: 1rem;">This practice section is for offline self-review. Use the toolbar to highlight passage text (Alt+H), erase highlights (Alt+E), flag items for review (Alt+F), or open the Periodic Table (Alt+T). Click the &times; on any answer choice to strike it out.</p>
+        <p style="margin-bottom: 1rem;"><strong>Exam mode</strong> (Review Answer off): change your answers freely until you end the section. <strong>Tutor mode</strong> (Review Answer on): confirm each answer to see the correct choice and explanation right away. A timer tracks your time on the current question and your total time.</p>
+        <p style="margin-bottom: 0;">When you finish, choose <strong>End Section</strong> to review every question with the correct answers and explanations.</p>
+      </div>
+      <button class="btn-confirm" id="start-btn" style="font-size: 1.1rem; padding: 0.75rem 2.5rem; border-radius: 2px;">Start Section</button>
+    </div>
+
+    <!-- Default Empty State -->
+    <div class="empty-state" id="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+      <p>Load an extracted AAMC JSON file to start reviewing.</p>
+    </div>
+  </div>
+
+  <!-- Bottom status footer -->
+  <footer id="footer" style="display: none;">
+    <div class="footer-left">
+      <div id="confidence-wrap" style="display:flex; align-items:center; gap:1rem;">
+        <span>How Confident Are You?</span>
+        <div class="confidence-selector">
+          <button class="confidence-btn" data-level="low">Low</button>
+          <button class="confidence-btn" data-level="medium">Medium</button>
+          <button class="confidence-btn" data-level="high">High</button>
+        </div>
+      </div>
+      <div id="review-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg><span id="review-note-text">Review Mode &mdash; correct answers shown</span></div>
+    </div>
+    <div class="footer-right">
+      <button class="btn-confirm" id="confirm-btn" disabled>Confirm</button>
+    </div>
+  </footer>
+
+  <!-- Navigator Modal -->
+  <div class="modal-overlay" id="nav-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Section Navigator</span>
+        <button class="modal-close" id="nav-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="navigator-legend">
+          <span><i class="legend-swatch" style="background:var(--pane-bg)"></i> Unanswered</span>
+          <span><i class="legend-swatch" style="background:var(--answered-bg)"></i> Answered</span>
+          <span><i class="legend-swatch" style="background:var(--selected-bg);border-color:var(--selected-border)"></i> Current</span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#c62828" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg> Flagged for review</span>
+        </div>
+        <div class="navigator-grid" id="navigator-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Periodic Table Modal -->
+  <div class="modal-overlay" id="pt-modal">
+    <div class="modal-content" style="max-width: 1000px; height: 85%;">
+      <div class="modal-header">
+        <span>Periodic Table of the Elements</span>
+        <button class="modal-close" id="pt-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; align-items: center; justify-content: center; padding: 0.5rem; background: #fff;">
+        <img src="periodic_table.jpg" alt="Periodic Table of Elements" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'; document.getElementById('pt-missing').style.display='block';">
+        <div id="pt-missing" style="display:none; padding:2rem; text-align:center; color:#333; line-height:1.6;">
+          No periodic table image found.<br>
+          Drop a <code>periodic_table.jpg</code> into the app folder to show one here.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let quizData = [];
+    let currentIdx = 0;
+    let currentTitle = '';
+    let selectedChoiceId = null;
+
+    // Attempt state
+    let answeredQuestions = {}; // questionId -> { selectedId, checked }
+    let flaggedQuestions = {};  // questionId -> boolean
+    let eliminatedChoices = {}; // questionId -> Set(choiceId)
+    let confidenceLevels = {};  // questionId -> String
+    let passageAnnotations = {};// passage_id -> edited passage HTML (persists highlights)
+    let questionAnnotations = {};// questionId -> edited question-stem HTML
+    let isReviewMode = false;
+
+    // Timer state (both count up)
+    let elapsedSec = 0;          // total time across the whole section
+    let questionSec = 0;         // time on the current question
+    let timerInterval = null;
+
+    // DOM Elements
+    const fileInput = document.getElementById('file-input');
+    const emptyState = document.getElementById('empty-state');
+    const viewerPane = document.getElementById('viewer-pane');
+    const subNavbar = document.getElementById('sub-navbar');
+    const footer = document.getElementById('footer');
+
+    const passagePane = document.getElementById('passage-pane');
+    const passageTitle = document.getElementById('passage-title');
+    const passageContent = document.getElementById('passage-content');
+    const questionStem = document.getElementById('question-stem');
+    const choicesList = document.getElementById('choices-list');
+
+    const headerTitle = document.getElementById('header-title');
+    const qTimerEl = document.getElementById('q-timer');
+    const totalTimerEl = document.getElementById('total-timer');
+    const totalLabel = document.getElementById('total-label');
+    const reviewSwitch = document.getElementById('review-switch');
+
+    const prevArrow = document.getElementById('prev-arrow');
+    const nextArrow = document.getElementById('next-arrow');
+    const navIndexText = document.getElementById('nav-index-text');
+    const progressFill = document.getElementById('progress-fill');
+    const progressTrack = document.getElementById('progress-track');
+
+    const toolHl = document.getElementById('tool-hl');
+    const toolEraser = document.getElementById('tool-eraser');
+    const toolFlag = document.getElementById('tool-flag');
+    const toolPt = document.getElementById('tool-pt');
+    const skipBtn = document.getElementById('skip-btn');
+
+    const confirmBtn = document.getElementById('confirm-btn');
+    const confidenceWrap = document.getElementById('confidence-wrap');
+    const reviewNote = document.getElementById('review-note');
+    const confidenceBtns = document.querySelectorAll('.confidence-btn');
+    const explanationPanel = document.getElementById('explanation-panel');
+    const explanationContent = document.getElementById('explanation-content');
+
+    // Summary Pane
+    const summaryPane = document.getElementById('summary-pane');
+    const summaryTitle = document.getElementById('summary-title');
+    const summaryInfo = document.getElementById('summary-info');
+    const startBtn = document.getElementById('start-btn');
+
+    // Modals
+    const navModal = document.getElementById('nav-modal');
+    const navClose = document.getElementById('nav-close');
+    const navigatorGrid = document.getElementById('navigator-grid');
+
+    const ptModal = document.getElementById('pt-modal');
+    const ptClose = document.getElementById('pt-close');
+
+    /* ---------- Mode helpers ---------- */
+    // Exam mode = answers changeable, no per-question reveal.
+    // Tutor mode = confirm reveals the answer immediately.
+    // A question is "locked" only after it has been confirmed in tutor mode.
+    function isLocked(questionId) {
+      const s = answeredQuestions[questionId];
+      return !!(s && s.checked);
+    }
+
+    /* ---------- Timers ---------- */
+    function formatTime(sec) {
+      sec = Math.max(0, Math.floor(sec));
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      if (h > 0) {
+        return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      }
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function renderTimers() {
+      qTimerEl.innerText = formatTime(questionSec);      // time on the current question
+      totalLabel.innerText = 'Total Time:';
+      totalTimerEl.innerText = formatTime(elapsedSec);   // total time across the section
+    }
+
+    function startTimers() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        elapsedSec++;
+        questionSec++;
+        renderTimers();
+      }, 1000);
+    }
+
+    reviewSwitch.addEventListener('change', () => {
+      renderTimers();
+      if (quizData.length > 0 && viewerPane.style.display !== 'none') {
+        showQuestion(currentIdx);
+      }
+    });
+
+    /* ---------- Modals ---------- */
+    function togglePeriodicTable() {
+      const open = ptModal.style.display === 'flex';
+      ptModal.style.display = open ? 'none' : 'flex';
+      toolPt.classList.toggle('active', !open);
+    }
+
+    function toggleNavigator() {
+      if (navModal.style.display === 'flex') {
+        navModal.style.display = 'none';
+      } else {
+        populateNavigatorGrid();
+        navModal.style.display = 'flex';
+      }
+    }
+
+    /* ---------- Flagging ---------- */
+    toolFlag.addEventListener('click', toggleFlag);
+    function toggleFlag() {
+      const q = quizData[currentIdx];
+      if (!q) return;
+      flaggedQuestions[q.id] = !flaggedQuestions[q.id];
+      toolFlag.classList.toggle('active', flaggedQuestions[q.id]);
+    }
+
+    /* ---------- Annotations (highlight / strikethrough) ---------- */
+    // Wrap every text node intersected by the current selection. Wrapping
+    // per-text-node avoids the DOMException that range.surroundContents()
+    // throws when a selection spans element boundaries.
+    function applyWrap(tagName, className) {
+      const sel = window.getSelection();
+      if (!sel.rangeCount || sel.isCollapsed) return false;
+      const range = sel.getRangeAt(0);
+
+      // Only annotate inside the passage or the question stem.
+      const anchor = range.commonAncestorContainer;
+      const inScope = passageContent.contains(anchor) || questionStem.contains(anchor) ||
+                      anchor === passageContent || anchor === questionStem;
+      if (!inScope) return false;
+
+      const root = anchor.nodeType === Node.TEXT_NODE ? anchor.parentNode : anchor;
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+      const textNodes = [];
+      let n;
+      while ((n = walker.nextNode())) {
+        if (range.intersectsNode(n) && n.nodeValue.trim().length) textNodes.push(n);
+      }
+      if (!textNodes.length) return false;
+
+      let wrappedAny = false;
+      textNodes.forEach(node => {
+        // Skip text that is already inside a matching wrapper.
+        if (node.parentNode && node.parentNode.classList &&
+            node.parentNode.classList.contains(className)) return;
+        let start = 0;
+        let end = node.nodeValue.length;
+        if (node === range.startContainer) start = range.startOffset;
+        if (node === range.endContainer) end = range.endOffset;
+        if (start >= end) return;
+        const r = document.createRange();
+        r.setStart(node, start);
+        r.setEnd(node, end);
+        const wrapper = document.createElement(tagName);
+        if (className) wrapper.className = className;
+        try {
+          r.surroundContents(wrapper);
+          wrappedAny = true;
+        } catch (err) {
+          /* ignore a node we cannot cleanly wrap */
+        }
+      });
+
+      sel.removeAllRanges();
+      if (wrappedAny) persistAnnotations();
+      return wrappedAny;
+    }
+
+    function doHighlight() {
+      return applyWrap('mark', 'hl');
+    }
+
+    function unwrapEl(el) {
+      const parent = el.parentNode;
+      if (!parent) return;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+      parent.normalize();
+    }
+
+    // Eraser: remove highlights. With a text selection, erase the highlights
+    // that intersect it; with nothing selected, clear every highlight in the
+    // current passage and question.
+    function doErase() {
+      const containers = [passageContent, questionStem].filter(Boolean);
+      const sel = window.getSelection();
+      const hasSelection = sel && sel.rangeCount && !sel.isCollapsed;
+      const range = hasSelection ? sel.getRangeAt(0) : null;
+      let removed = 0;
+      containers.forEach(container => {
+        container.querySelectorAll('mark').forEach(mark => {
+          if (!range || range.intersectsNode(mark)) { unwrapEl(mark); removed++; }
+        });
+      });
+      if (hasSelection) sel.removeAllRanges();
+      if (removed) persistAnnotations();
+      return removed > 0;
+    }
+
+    // Click a single highlight to remove it.
+    function attachUnwrapHandler(container) {
+      container.addEventListener('click', (e) => {
+        const mark = e.target.closest('mark');
+        if (!mark || !container.contains(mark)) return;
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed) return; // let the user make a new selection
+        unwrapEl(mark);
+        persistAnnotations();
+      });
+    }
+    attachUnwrapHandler(passageContent);
+    attachUnwrapHandler(questionStem);
+
+    function persistAnnotations() {
+      const q = quizData[currentIdx];
+      if (!q) return;
+      if (q.passage_id && passagePane.style.display !== 'none') {
+        passageAnnotations[q.passage_id] = passageContent.innerHTML;
+      }
+      questionAnnotations[q.id] = questionStem.innerHTML;
+    }
+
+    toolHl.addEventListener('click', doHighlight);
+    toolEraser.addEventListener('click', doErase);
+
+    // Periodic Table
+    toolPt.addEventListener('click', togglePeriodicTable);
+    ptClose.addEventListener('click', togglePeriodicTable);
+    ptModal.addEventListener('click', (e) => { if (e.target === ptModal) togglePeriodicTable(); });
+
+    // Navigator
+    navIndexText.addEventListener('click', toggleNavigator);
+    navClose.addEventListener('click', toggleNavigator);
+    navModal.addEventListener('click', (e) => { if (e.target === navModal) toggleNavigator(); });
+
+    /* ---------- End / Review ---------- */
+    function enterReviewMode() {
+      isReviewMode = true;
+      reviewSwitch.checked = true;
+      clearInterval(timerInterval);
+      renderTimers();
+      showQuestion(0);
+    }
+
+    document.getElementById('done-btn').addEventListener('click', () => {
+      if (isReviewMode) {
+        // Return to the landing / summary screen.
+        clearInterval(timerInterval);
+        isReviewMode = false;
+        viewerPane.style.display = 'none';
+        subNavbar.style.display = 'none';
+        footer.style.display = 'none';
+        summaryPane.style.display = 'flex';
+        return;
+      }
+      const unanswered = quizData.filter(q => !answeredQuestions[q.id]).length;
+      let msg = 'Are you sure you want to end the section and review your answers?';
+      if (unanswered > 0) {
+        msg = `You have ${unanswered} unanswered question(s). End the section and review your answers?`;
+      }
+      if (confirm(msg)) {
+        enterReviewMode();
+      }
+    });
+
+    /* ---------- Loading data ---------- */
+    // On load, try your own local set first (content.json, git-ignored so it
+    // is never published), then fall back to the bundled sample. If neither
+    // is present, the "Load JSON" empty state is shown.
+    window.addEventListener('DOMContentLoaded', () => {
+      const candidates = [
+        { file: 'content.json', title: 'My Practice Set' },
+        { file: 'sample.json', title: 'Sample Practice Set' }
+      ];
+      (function tryNext(i) {
+        if (i >= candidates.length) return;
+        fetch(candidates[i].file)
+          .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
+          .then(data => loadQuizData(data, candidates[i].title))
+          .catch(() => tryNext(i + 1));
+      })(0);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+          const prettyName = file.name.replace('.json', '').replace(/_/g, ' ');
+          loadQuizData(data, prettyName);
+        } catch (err) {
+          alert('Failed to parse JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    function resetAttemptState() {
+      answeredQuestions = {};
+      flaggedQuestions = {};
+      eliminatedChoices = {};
+      confidenceLevels = {};
+      passageAnnotations = {};
+      questionAnnotations = {};
+      isReviewMode = false;
+      selectedChoiceId = null;
+      elapsedSec = 0;
+      questionSec = 0;
+      if (timerInterval) clearInterval(timerInterval);
+    }
+
+    startBtn.addEventListener('click', () => {
+      resetAttemptState();
+      reviewSwitch.checked = false; // exam mode by default
+
+      summaryPane.style.display = 'none';
+      viewerPane.style.display = 'flex';
+      subNavbar.style.display = 'flex';
+      footer.style.display = 'flex';
+
+      startTimers();
+      renderTimers();
+      showQuestion(0);
+    });
+
+    function loadQuizData(data, title) {
+      if (!Array.isArray(data) || data.length === 0) return;
+      quizData = data.slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+      currentTitle = title;
+      currentIdx = 0;
+      resetAttemptState();
+      reviewSwitch.checked = false;
+
+      headerTitle.innerText = title;
+      emptyState.style.display = 'none';
+      viewerPane.style.display = 'none';
+      subNavbar.style.display = 'none';
+      footer.style.display = 'none';
+
+      summaryTitle.innerText = title;
+      const mins = Math.round(computeAllotmentFor(title, quizData.length) / 60);
+      summaryInfo.innerText = `This section contains ${quizData.length} questions · suggested time ${mins} minutes.`;
+      summaryPane.style.display = 'flex';
+    }
+
+    // Allotment helper usable before currentTitle is committed.
+    function computeAllotmentFor(title, count) {
+      const isCars = /cars|critical analysis|reasoning skills/i.test(title || '');
+      return count * (isCars ? 102 : 97);
+    }
+
+    /* ---------- Rendering a question ---------- */
+    function showQuestion(idx) {
+      currentIdx = idx;
+      selectedChoiceId = null;
+      questionSec = 0;
+
+      const q = quizData[idx];
+      if (!q) return;
+
+      navIndexText.innerText = `${idx + 1}/${quizData.length}`;
+      progressFill.style.width = `${((idx + 1) / quizData.length) * 100}%`;
+
+      // Passage panel
+      if (q.passageHtml) {
+        passagePane.style.display = 'block';
+
+        let passageNum = 1;
+        const uniquePassages = Array.from(new Set(
+          quizData.slice(0, idx + 1).map(x => x.passage_id).filter(Boolean)
+        ));
+        if (q.passage_id) {
+          passageNum = uniquePassages.indexOf(q.passage_id) + 1;
+        }
+        const qCount = quizData.filter(x => x.passage_id === q.passage_id).length;
+
+        // Avoid duplicating a title the passage HTML already embeds (CARS files do).
+        const hasEmbeddedHeader = /Passage\s*\d+.{0,12}\(\s*\d+\s*question/i.test(q.passageHtml);
+        if (hasEmbeddedHeader) {
+          passageTitle.style.display = 'none';
+        } else {
+          passageTitle.style.display = 'block';
+          passageTitle.innerText = `Passage ${passageNum || 1} (${qCount} question${qCount === 1 ? '' : 's'})`;
+        }
+
+        passageContent.innerHTML = (q.passage_id && passageAnnotations[q.passage_id]) || q.passageHtml;
+      } else {
+        passagePane.style.display = 'none';
+      }
+
+      // Question stem (restore any saved highlights)
+      questionStem.innerHTML = questionAnnotations[q.id] || q.question_content || '';
+      toolFlag.classList.toggle('active', !!flaggedQuestions[q.id]);
+
+      explanationPanel.style.display = 'none';
+
+      if (!eliminatedChoices[q.id]) eliminatedChoices[q.id] = new Set();
+
+      // Confidence buttons
+      confidenceBtns.forEach(btn => btn.classList.remove('active'));
+      if (confidenceLevels[q.id]) {
+        const activeConf = Array.from(confidenceBtns).find(btn => btn.dataset.level === confidenceLevels[q.id]);
+        if (activeConf) activeConf.classList.add('active');
+      }
+
+      // Answer choices
+      choicesList.innerHTML = '';
+      q.answer_choices.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'choice-item';
+        item.dataset.choiceId = c.id;
+
+        const letter = getChoiceLetter(c.sort_order);
+        item.dataset.letter = letter;
+        item.innerHTML = `
+          <div class="choice-letter">${letter}</div>
+          <div class="choice-text">${c.choice_content}</div>
+          <div class="eliminate-x" title="Strike out / eliminate this choice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+        `;
+
+        if (eliminatedChoices[q.id].has(c.id)) item.classList.add('eliminated');
+
+        item.addEventListener('click', (e) => {
+          if (isReviewMode || isLocked(q.id)) return;
+          if (e.target.closest('.eliminate-x')) {
+            toggleElimination(item, c.id);
+          } else {
+            if (item.classList.contains('eliminated')) return;
+            selectChoice(item, c.id);
+          }
+        });
+
+        choicesList.appendChild(item);
+      });
+
+      // Restore previous selection
+      const state = answeredQuestions[q.id];
+      if (state) {
+        selectedChoiceId = state.selectedId;
+        const selectedItem = Array.from(choicesList.children)
+          .find(item => Number(item.dataset.choiceId) === selectedChoiceId);
+        if (selectedItem) selectedItem.classList.add('selected');
+      }
+
+      // Reveal answers: always in review mode, or for a confirmed tutor question.
+      if (isReviewMode || (state && state.checked)) {
+        revealAnswer();
+      }
+
+      updateFooterForMode();
+    }
+
+    function updateFooterForMode() {
+      const q = quizData[currentIdx];
+      const state = q ? answeredQuestions[q.id] : null;
+
+      if (isReviewMode) {
+        confidenceWrap.style.display = 'none';
+        reviewNote.style.display = 'flex';
+        confirmBtn.style.display = 'none';
+        return;
+      }
+
+      confidenceWrap.style.display = 'flex';
+      reviewNote.style.display = 'none';
+      confirmBtn.style.display = '';
+
+      if (reviewSwitch.checked) {
+        // Tutor mode: Confirm reveals the answer, then turns into Next.
+        const alreadyRevealed = state && state.checked;
+        if (alreadyRevealed) {
+          confirmBtn.innerText = 'Next ▶';
+          confirmBtn.disabled = false;
+        } else {
+          confirmBtn.innerText = 'Confirm';
+          confirmBtn.disabled = !selectedChoiceId;
+        }
+      } else {
+        // Exam mode: advance freely; answers stay changeable.
+        confirmBtn.innerText = 'Next ▶';
+        confirmBtn.disabled = false;
+      }
+    }
+
+    function getChoiceLetter(sortOrder) {
+      return String.fromCharCode(65 + sortOrder);
+    }
+
+    function selectChoice(element, choiceId) {
+      Array.from(choicesList.children).forEach(child => child.classList.remove('selected'));
+      element.classList.add('selected');
+      selectedChoiceId = choiceId;
+
+      const q = quizData[currentIdx];
+      answeredQuestions[q.id] = { selectedId: choiceId, checked: false };
+
+      if (reviewSwitch.checked && !isReviewMode) confirmBtn.disabled = false;
+    }
+
+    function toggleElimination(element, choiceId) {
+      const q = quizData[currentIdx];
+      if (eliminatedChoices[q.id].has(choiceId)) {
+        eliminatedChoices[q.id].delete(choiceId);
+        element.classList.remove('eliminated');
+      } else {
+        eliminatedChoices[q.id].add(choiceId);
+        element.classList.add('eliminated');
+        if (selectedChoiceId === choiceId) {
+          element.classList.remove('selected');
+          selectedChoiceId = null;
+          delete answeredQuestions[q.id];
+          updateFooterForMode();
+        }
+      }
+    }
+
+    /* ---------- Confidence ---------- */
+    confidenceBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = quizData[currentIdx];
+        if (!q || isReviewMode) return;
+        confidenceBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        confidenceLevels[q.id] = btn.dataset.level;
+      });
+    });
+
+    /* ---------- Confirm / Next ---------- */
+    confirmBtn.addEventListener('click', () => {
+      if (isReviewMode) return;
+      const q = quizData[currentIdx];
+      if (reviewSwitch.checked) {
+        // Tutor mode: Confirm reveals; once revealed the button acts as Next.
+        const alreadyRevealed = answeredQuestions[q.id] && answeredQuestions[q.id].checked;
+        if (alreadyRevealed) { goNext(); return; }
+        if (!selectedChoiceId) return;
+        answeredQuestions[q.id] = answeredQuestions[q.id] || { selectedId: selectedChoiceId };
+        answeredQuestions[q.id].checked = true;
+        revealAnswer();
+        updateFooterForMode();
+      } else {
+        // Exam mode: advance.
+        goNext();
+      }
+    });
+
+    function revealAnswer() {
+      const q = quizData[currentIdx];
+      const showResults = reviewSwitch.checked || isReviewMode;
+
+      Array.from(choicesList.children).forEach(child => {
+        const choiceId = Number(child.dataset.choiceId);
+        const choice = q.answer_choices.find(c => c.id === choiceId);
+
+        const elimX = child.querySelector('.eliminate-x');
+        if (elimX) elimX.style.display = 'none';
+
+        child.classList.remove('correct', 'incorrect');
+        if (showResults) {
+          if (choice && choice.correct) {
+            child.classList.add('correct');
+          } else if (choiceId === selectedChoiceId) {
+            child.classList.add('incorrect');
+          }
+        }
+      });
+
+      if (showResults && q.answer_content) {
+        explanationPanel.style.display = 'block';
+        explanationContent.innerHTML = q.answer_content;
+      } else {
+        explanationPanel.style.display = 'none';
+      }
+    }
+
+    /* ---------- Navigation ---------- */
+    prevArrow.addEventListener('click', goPrev);
+    nextArrow.addEventListener('click', goNext);
+    skipBtn.addEventListener('click', goNext);
+
+    progressTrack.addEventListener('click', (e) => {
+      if (!quizData.length) return;
+      const rect = progressTrack.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      const idx = Math.min(quizData.length - 1, Math.max(0, Math.floor(ratio * quizData.length)));
+      showQuestion(idx);
+    });
+
+    function goPrev() {
+      if (currentIdx > 0) showQuestion(currentIdx - 1);
+    }
+
+    function goNext() {
+      if (currentIdx < quizData.length - 1) {
+        showQuestion(currentIdx + 1);
+      } else if (!isReviewMode) {
+        if (confirm('You have reached the last question. End the section and review your answers?')) {
+          enterReviewMode();
+        }
+      }
+    }
+
+    /* ---------- Navigator grid ---------- */
+    function populateNavigatorGrid() {
+      navigatorGrid.innerHTML = '';
+      quizData.forEach((q, idx) => {
+        const cell = document.createElement('div');
+        cell.className = 'nav-grid-item';
+        cell.innerText = idx + 1;
+
+        if (idx === currentIdx) cell.classList.add('active');
+        if (flaggedQuestions[q.id]) {
+          cell.classList.add('flagged');
+          cell.insertAdjacentHTML('beforeend', '<svg class="flag-mark" viewBox="0 0 24 24" fill="#d32f2f"><path d="M6 2v20h2v-7h9l-2.5-4L17 6H8V2z"></path></svg>');
+        }
+
+        const state = answeredQuestions[q.id];
+        if (isReviewMode && state) {
+          const correctChoice = q.answer_choices.find(c => c.correct);
+          if (correctChoice && correctChoice.id === state.selectedId) {
+            cell.style.background = 'var(--correct-bg)';
+            cell.style.borderColor = 'var(--correct-border)';
+          } else {
+            cell.style.background = 'var(--incorrect-bg)';
+            cell.style.borderColor = 'var(--incorrect-border)';
+          }
+        } else if (state) {
+          cell.style.background = 'var(--answered-bg)';
+        }
+
+        cell.addEventListener('click', () => {
+          showQuestion(idx);
+          toggleNavigator();
+        });
+        navigatorGrid.appendChild(cell);
+      });
+    }
+
+    /* ---------- Keyboard shortcuts ---------- */
+    window.addEventListener('keydown', (e) => {
+      if (quizData.length === 0 || viewerPane.style.display === 'none') return;
+
+      const altPressed = e.altKey;
+      const key = e.key.toLowerCase();
+
+      if (altPressed && key === 'n') { e.preventDefault(); goNext(); }
+      else if (altPressed && key === 'p') { e.preventDefault(); goPrev(); }
+      else if (altPressed && key === 'f') { e.preventDefault(); toggleFlag(); }
+      else if (altPressed && key === 't') { e.preventDefault(); togglePeriodicTable(); }
+      else if (altPressed && key === 'v') { e.preventDefault(); toggleNavigator(); }
+      else if (altPressed && key === 'h') { e.preventDefault(); doHighlight(); }
+      else if (altPressed && key === 'e') { e.preventDefault(); doErase(); }
+      else if (!altPressed && ['a', 'b', 'c', 'd'].includes(key)) {
+        const q = quizData[currentIdx];
+        if (isReviewMode || isLocked(q.id)) return;
+        const items = Array.from(choicesList.children);
+        const targetItem = items.find(item => (item.dataset.letter || '').toLowerCase() === key);
+        if (targetItem && !targetItem.classList.contains('eliminated')) {
+          selectChoice(targetItem, Number(targetItem.dataset.choiceId));
+        }
+      }
+      else if (e.key === 'Escape') {
+        if (navModal.style.display === 'flex') toggleNavigator();
+        else if (ptModal.style.display === 'flex') togglePeriodicTable();
+      }
+    });
+  </script>
+</body>
+</html>
