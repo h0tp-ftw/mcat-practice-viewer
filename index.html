@@ -104,13 +104,32 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      cursor: pointer;
+      border-radius: 3px;
+      padding: 0.15rem 0.35rem;
     }
+
+    .timer-container:hover { background: rgba(255, 255, 255, 0.1); }
 
     .timer-item {
       display: flex;
       align-items: center;
       gap: 0.4rem;
     }
+
+    /* Click-to-hide the time (like the AAMC clock) */
+    .timers-show-hint {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--header-text);
+      opacity: 0.9;
+    }
+
+    .timers-show-hint svg { width: 14px; height: 14px; }
+
+    .timer-container.timers-hidden .timer-item { display: none; }
+    .timer-container.timers-hidden .timers-show-hint { display: inline-flex; }
 
     .timer-icon {
       opacity: 0.85;
@@ -708,98 +727,72 @@
     .intro-pane {
       flex: 1;
       overflow-y: auto;
+      background: var(--page-bg);
       display: flex;
       justify-content: center;
       align-items: flex-start;
       padding: 2.5rem 1.5rem;
-      /* subtle test-day dot grid */
-      background:
-        radial-gradient(circle at 1px 1px, rgba(15, 60, 100, 0.06) 1px, transparent 0) 0 0 / 22px 22px,
-        var(--page-bg);
     }
 
-    .intro-card {
+    .intro-content {
       background: var(--pane-bg);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      max-width: 800px;
+      border-radius: 4px;
+      max-width: 720px;
       width: 100%;
-      overflow: hidden;
-      box-shadow: 0 10px 34px rgba(15, 40, 70, 0.13);
-      animation: introRise 0.5s ease both;
+      padding: 2.5rem 2.75rem;
     }
 
-    @keyframes introRise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    /* Faux exam-style hero strip */
-    .intro-hero {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #2b6296 0%, #163a5e 72%);
-      color: #fff;
-      padding: 2.15rem 2.5rem 1.9rem;
-    }
-
-    .intro-hero::after {
-      content: "";
-      position: absolute;
-      top: -45%;
-      right: -8%;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 70%);
-      pointer-events: none;
-    }
-
-    .intro-pill {
-      display: inline-block;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .intro-content h1 {
+      font-size: 1.6rem;
       font-weight: 700;
-      color: #d3e6f7;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 999px;
-      padding: 0.22rem 0.75rem;
-      margin-bottom: 1rem;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
     }
 
-    .intro-title {
-      color: #fff;
-      font-size: 2rem;
-      letter-spacing: -0.01em;
-      margin: 0 0 0.4rem;
-      cursor: default;
-      user-select: none;
-    }
-
-    .intro-tagline {
-      color: #d6e4f1;
-      font-size: 1.1rem;
+    .intro-lead {
+      color: var(--text-muted);
+      font-size: 1.05rem;
       line-height: 1.5;
-      max-width: 40rem;
-      position: relative;
+      margin-bottom: 0.5rem;
     }
 
-    .intro-body { padding: 1.75rem 2.5rem 1.5rem; }
+    .intro-content h2 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 0.6rem;
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
 
-    .intro-actions {
+    .intro-content p { line-height: 1.6; color: var(--text-main); margin-bottom: 0.9rem; }
+
+    .intro-content ul {
+      margin: 0 0 0.9rem;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .intro-content li { line-height: 1.55; color: var(--text-main); }
+
+    .intro-content kbd {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      background: #eef1f4;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+
+    .intro-buttons {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-
-    .intro-cta {
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
-    }
-
-    .intro-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 20px rgba(11, 92, 158, 0.38);
+      margin: 1.75rem 0 0.25rem;
     }
 
     .btn-secondary {
@@ -807,83 +800,25 @@
       border: 1px solid var(--accent);
       color: var(--accent);
       padding: 0.5rem 1.5rem;
-      border-radius: 3px;
+      border-radius: 2px;
       font-weight: bold;
       cursor: pointer;
       font-size: 0.9rem;
-      transition: background 0.15s ease;
     }
 
     .btn-secondary:hover { background: rgba(11, 92, 158, 0.08); }
 
-    .intro-block {
-      border-top: 1px solid var(--border-color);
-      padding-top: 1.4rem;
-      margin-top: 1.4rem;
-    }
-
-    .intro-block h2 {
-      font-size: 1.02rem;
-      margin-bottom: 0.7rem;
-      color: var(--text-main);
-    }
-
-    .intro-block > p { line-height: 1.6; color: var(--text-main); }
-
-    .intro-features {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .intro-features li {
-      display: flex;
-      gap: 0.85rem;
-      align-items: flex-start;
-      line-height: 1.55;
-      color: var(--text-main);
-    }
-
-    .intro-features svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      color: var(--accent);
-    }
-
-    .intro-features kbd {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.78em;
-      background: #eef1f4;
-      border: 1px solid var(--border-color);
-      border-radius: 3px;
-      padding: 0 4px;
-    }
-
     .intro-foot {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
       border-top: 1px solid var(--border-color);
-      margin-top: 1.5rem;
-      padding: 1.1rem 0 0.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
       color: var(--text-muted);
     }
 
-    .intro-sig a {
-      color: var(--accent);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .intro-sig a:hover { text-decoration: underline; }
+    .intro-foot a { color: var(--accent); text-decoration: none; }
+    .intro-foot a:hover { text-decoration: underline; }
 
     /* Toast (used by easter eggs) */
     .toast {
@@ -994,7 +929,7 @@
   <header>
     <div class="header-left" id="header-title">MCAT Practice Viewer</div>
     <div class="header-right">
-      <div class="timer-container">
+      <div class="timer-container" id="timer-container" title="Click to hide or show the time">
         <div class="timer-item">
           <span class="timer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg></span>
           <span>This Question: <strong id="q-timer">00:00</strong></span>
@@ -1003,6 +938,7 @@
           <span class="timer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg></span>
           <span id="total-label">Total Time:</span> <strong id="total-timer">00:00</strong>
         </div>
+        <span class="timers-show-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Show time</span>
       </div>
       <div class="review-toggle-container">
         <span>Review Answer</span>
@@ -1071,53 +1007,28 @@
     </div>
 
     <!-- Project intro / landing page -->
-    <!-- psst: try the Konami code (up up down down left right left right B A) or type 528 here. good luck! -- h0tp-ftw -->
+    <!-- landing: there may be a shortcut or two hidden on this screen. good luck. -- h0tp-ftw -->
     <div class="intro-pane" id="intro-pane">
-      <div class="intro-card">
-        <div class="intro-hero">
-          <span class="intro-pill">Practice Section</span>
-          <h1 class="intro-title" id="intro-title">MCAT-Style Practice Viewer</h1>
-          <p class="intro-tagline">A free, offline, test-day-style interface for practice questions &mdash; right in your browser. No sign-up, no install, nothing to download.</p>
+      <div class="intro-content">
+        <h1 id="intro-title">MCAT-Style Practice Viewer</h1>
+        <p class="intro-lead">An offline viewer for reviewing multiple-choice practice questions in a test-day-style interface. Everything runs in your browser.</p>
+
+        <h2>About</h2>
+        <p>This is an independent practice tool. It shows one passage-and-question set at a time in the familiar split-screen layout, with a highlighter, answer strike-out, a question navigator, a section timer, a periodic table, and worked explanations. Nothing is uploaded, installed, or tracked.</p>
+
+        <h2>How it works</h2>
+        <ul>
+          <li>Use the <em>Review Answer</em> switch to choose a mode. With it off (<strong>Exam</strong>), you answer freely and see your results when you end the section. With it on (<strong>Tutor</strong>), confirming a question reveals the answer and explanation.</li>
+          <li>Highlight text with <kbd>Alt</kbd>+<kbd>H</kbd>, erase with <kbd>Alt</kbd>+<kbd>E</kbd>, and click the <strong>&times;</strong> on a choice to cross it out. Flag a question with <kbd>Alt</kbd>+<kbd>F</kbd>, open the navigator with <kbd>Alt</kbd>+<kbd>V</kbd>, and the periodic table with <kbd>Alt</kbd>+<kbd>T</kbd>.</li>
+          <li>To use your own questions, drag a <code>.json</code> file onto the page or choose <em>Load JSON</em>. The format is described in the repository.</li>
+        </ul>
+
+        <div class="intro-buttons">
+          <button class="btn-confirm" id="try-sample-btn">Begin sample section &rarr;</button>
+          <button class="btn-secondary" id="load-own-btn">Load your own file</button>
         </div>
 
-        <div class="intro-body">
-          <div class="intro-actions">
-            <button class="btn-confirm intro-cta" id="try-sample-btn">Try the sample questions &rarr;</button>
-            <button class="btn-secondary" id="load-own-btn">Load your own .json</button>
-          </div>
-
-          <div class="intro-block">
-            <h2>What is this?</h2>
-            <p>An independent viewer that recreates the feel of a computer-based exam: split passage / question panes, a highlighter, answer elimination, a question navigator, a section timer, a built-in periodic table, and per-question explanations. Everything runs locally &mdash; nothing is uploaded, installed, or tracked.</p>
-          </div>
-
-          <div class="intro-block">
-            <h2>How to use it</h2>
-            <ul class="intro-features">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="6"></rect><circle cx="16" cy="12" r="3"></circle></svg>
-                <div><strong>Two modes</strong> &mdash; the <em>Review Answer</em> switch flips between <strong>Exam</strong> (change answers freely; results at the end) and <strong>Tutor</strong> (Confirm reveals the answer and explanation, then becomes Next).</div>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path></svg>
-                <div><strong>Annotate</strong> &mdash; highlight text (<kbd>Alt</kbd>+<kbd>H</kbd>), erase highlights (<kbd>Alt</kbd>+<kbd>E</kbd>), and click the <strong>&times;</strong> on a choice to strike it out.</div>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-                <div><strong>Move around</strong> &mdash; Previous / Next, flag for review (<kbd>Alt</kbd>+<kbd>F</kbd>), the navigator (<kbd>Alt</kbd>+<kbd>V</kbd>), and pick answers with <kbd>A</kbd>&ndash;<kbd>D</kbd>.</div>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                <div><strong>Periodic table</strong> &mdash; a full built-in table (<kbd>Alt</kbd>+<kbd>T</kbd>), and you can drag a <code>.json</code> file anywhere onto the page to load your own set.</div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="intro-foot">
-            <span class="intro-note">Unofficial &middot; not affiliated with the AAMC &middot; ships with no exam content (the demo is original).</span>
-            <span class="intro-sig">Built by <a href="https://github.com/h0tp-ftw" target="_blank" rel="noopener">h0tp-ftw</a> &middot; <a href="https://github.com/h0tp-ftw/mcat-practice-viewer" target="_blank" rel="noopener">GitHub &#8599;</a></span>
-          </div>
-        </div>
+        <p class="intro-foot">Unofficial &mdash; not affiliated with the AAMC. No exam content is included; the sample is original. Built by <a href="https://github.com/h0tp-ftw" target="_blank" rel="noopener">h0tp-ftw</a> &middot; <a href="https://github.com/h0tp-ftw/mcat-practice-viewer" target="_blank" rel="noopener">source on GitHub</a>.</p>
       </div>
     </div>
   </div>
@@ -1279,6 +1190,12 @@
         renderTimers();
       }, 1000);
     }
+
+    // Click the clock to hide/show the time (like the AAMC interface). The
+    // choice persists across the section.
+    document.getElementById('timer-container').addEventListener('click', () => {
+      document.getElementById('timer-container').classList.toggle('timers-hidden');
+    });
 
     reviewSwitch.addEventListener('change', () => {
       renderTimers();
@@ -2079,7 +1996,7 @@
     (function easterEggs() {
       try {
         console.log('%cMCAT-Style Practice Viewer', 'font:600 16px Arial;color:#2b6296');
-        console.log('%cbuilt by h0tp-ftw — good luck on your MCAT! 🧬  (psst: try the Konami code on the landing page)', 'color:#5a6169');
+        console.log('%cbuilt by h0tp-ftw · good luck with your studying.', 'color:#5a6169');
       } catch (e) {}
 
       let toastEl = null, toastTimer = null;
@@ -2122,20 +2039,20 @@
         const k = e.key.toLowerCase();
         kseq.push(k);
         if (kseq.length > konami.length) kseq.shift();
-        if (kseq.join(',') === konami.join(',')) { kseq = []; celebrate('528 unlocked — perfect-score energy ✨'); }
+        if (kseq.join(',') === konami.join(',')) { kseq = []; celebrate('528 — aim high.'); }
         if (/^[0-9]$/.test(k)) {
           typed = (typed + k).slice(-3);
-          if (typed === '528') { typed = ''; celebrate('528 club 🎯 — aim high!'); }
+          if (typed === '528') { typed = ''; celebrate('528 — aim high.'); }
         }
       });
 
       // Tap the title a few times for a little encouragement.
       const messages = [
-        "You've got this. 💪",
+        "You've got this.",
         "Trust your prep.",
         "Read actively, answer decisively.",
         "One passage at a time.",
-        "528 is just a lot of good decisions. 🎯",
+        "528 is a lot of good decisions.",
       ];
       let taps = 0, mi = 0;
       const titleEl = document.getElementById('intro-title');
