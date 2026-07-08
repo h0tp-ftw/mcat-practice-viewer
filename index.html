@@ -904,52 +904,23 @@
       100% { transform: translateY(102vh) rotateZ(680deg); opacity: 0.85; }
     }
 
-    /* Study-buddy pet (easter egg) */
-    .pet {
+    /* oneko cursor cat (easter egg) — 32px frames from a public-domain sprite */
+    #oneko {
       position: fixed;
       left: 0;
       top: 0;
-      width: 46px;
-      height: 52px;
+      width: 32px;
+      height: 32px;
       z-index: 2500;
       display: none;
       cursor: pointer;
-      transform: translate(-300px, -300px);
-      will-change: transform;
+      background-image: url('oneko.gif');
+      background-repeat: no-repeat;
+      image-rendering: pixelated;
+      will-change: left, top;
     }
 
-    .pet.active { display: block; }
-    .pet svg { width: 100%; height: 100%; overflow: visible; display: block; }
-    .pet-body { fill: #5cc0b6; stroke: #3f9d92; stroke-width: 1.5; }
-    .pet-eye { fill: #fff; }
-    .pet-pupil { fill: #163a5e; }
-    .pet-cheek { fill: #ff9db0; opacity: 0.55; }
-    .pet-mouth { fill: none; stroke: #163a5e; stroke-width: 1.6; stroke-linecap: round; }
-    .pet-antenna { stroke: #3f9d92; stroke-width: 1.5; stroke-linecap: round; }
-    .pet-antenna-tip { fill: var(--accent); }
-    .pet-shadow { fill: rgba(0, 0, 0, 0.12); }
-    .pet-eyes { transition: transform 0.09s ease; transform-box: fill-box; transform-origin: center; }
-    .pet-eyes.blink { transform: scaleY(0.12); }
-
-    .pet-bubble {
-      position: fixed;
-      left: 0;
-      top: 0;
-      background: #163a5e;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 9px;
-      z-index: 2501;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      white-space: nowrap;
-      transform: translate(-9999px, -9999px);
-    }
-
-    .pet-bubble.show { opacity: 1; }
+    #oneko.active { display: block; }
 
     .discrete-note {
       color: var(--text-muted);
@@ -1184,24 +1155,10 @@
     </div>
   </div>
 
-  <!-- Study-buddy pet (easter egg: type "pet"). Click it to meet its maker. -->
-  <div id="pet" class="pet" title="click to meet my maker" aria-hidden="true">
-    <svg viewBox="0 0 48 54">
-      <ellipse class="pet-shadow" cx="24" cy="50" rx="13" ry="3"></ellipse>
-      <line class="pet-antenna" x1="24" y1="9" x2="24" y2="3"></line>
-      <circle class="pet-antenna-tip" cx="24" cy="3" r="2"></circle>
-      <ellipse class="pet-body" cx="24" cy="27" rx="17" ry="18"></ellipse>
-      <circle class="pet-cheek" cx="13" cy="31" r="2.6"></circle>
-      <circle class="pet-cheek" cx="35" cy="31" r="2.6"></circle>
-      <g class="pet-eyes">
-        <circle class="pet-eye" cx="18" cy="25" r="4.6"></circle>
-        <circle class="pet-eye" cx="30" cy="25" r="4.6"></circle>
-        <circle class="pet-pupil" cx="18" cy="25" r="2.1"></circle>
-        <circle class="pet-pupil" cx="30" cy="25" r="2.1"></circle>
-      </g>
-      <path class="pet-mouth" d="M20 34 Q24 38 28 34"></path>
-    </svg>
-  </div>
+  <!-- oneko: the classic public-domain cursor cat, as an easter egg.
+       Summon by clicking the atom (or typing "pet"/"neko"); click it to open
+       the maker's GitHub. -->
+  <div id="oneko" title="click to meet my maker" aria-hidden="true"></div>
 
   <script>
     let quizData = [];
@@ -2223,94 +2180,83 @@
       requestAnimationFrame(frame);
     })();
 
-    /* ---------- Study-buddy pet: summon by clicking the atom (or typing
-       "pet"); it follows the cursor, and clicking it opens the maker's
-       GitHub. ---------- */
-    (function studyPet() {
-      const pet = document.getElementById('pet');
-      if (!pet) return;
+    /* ---------- oneko: the classic cursor cat as an easter egg. Summon by
+       clicking the atom (or typing "pet"/"neko"); it chases the cursor and
+       sleeps when it catches up. Click it to open the maker's GitHub.
+       Uses a public-domain 32px sprite sheet; the logic here is original. ---------- */
+    (function oneko() {
+      const el = document.getElementById('oneko');
+      if (!el) return;
       const GH = 'https://github.com/h0tp-ftw';
       const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const eyes = pet.querySelector('.pet-eyes');
-      const pupils = Array.from(pet.querySelectorAll('.pet-pupil'));
-      const base = pupils.map(p => ({ x: +p.getAttribute('cx'), y: +p.getAttribute('cy') }));
+      const SPEED = 10;
 
-      let active = false, paused = false;
-      let tx = window.innerWidth / 2, ty = window.innerHeight * 0.4;
-      let px = tx, py = ty, vx = 0, vy = 0;
-
-      let bubble;
-      function say(msg, ms) {
-        if (!bubble) { bubble = document.createElement('div'); bubble.className = 'pet-bubble'; document.body.appendChild(bubble); }
-        bubble.textContent = msg;
-        bubble.classList.add('show');
-        clearTimeout(bubble._t);
-        bubble._t = setTimeout(() => bubble.classList.remove('show'), ms || 1800);
+      // Which [col,row] cell of the sprite sheet shows each pose.
+      const SP = {
+        idle: [[3, 3]],
+        tired: [[3, 2]],
+        sleep: [[2, 0], [2, 1]],
+        alert: [[7, 3]],
+        N: [[1, 2], [1, 3]], NE: [[0, 2], [0, 3]], E: [[3, 0], [3, 1]], SE: [[5, 1], [5, 2]],
+        S: [[6, 3], [7, 2]], SW: [[5, 3], [6, 1]], W: [[4, 2], [4, 3]], NW: [[1, 0], [1, 1]]
+      };
+      function draw(pose, f) {
+        const set = SP[pose], c = set[f % set.length];
+        el.style.backgroundPosition = (-c[0] * 32) + 'px ' + (-c[1] * 32) + 'px';
+      }
+      function dir(dx, dy) {
+        const deg = (Math.atan2(dy, dx) * 180 / Math.PI + 360) % 360;
+        return ['E', 'SE', 'S', 'SW', 'W', 'NW', 'N', 'NE'][Math.round(deg / 45) % 8];
       }
 
+      let active = false, catX = 0, catY = 0, mouseX = 0, mouseY = 0, tick = 0, idle = 0, timer = null;
+
+      function place() { el.style.left = (catX - 16) + 'px'; el.style.top = (catY - 16) + 'px'; }
       function toggle() {
         active = !active;
-        pet.classList.toggle('active', active);
-        if (active) { px = tx; py = ty; say('hi! click me to meet my maker', 2600); }
-        else if (bubble) bubble.classList.remove('show');
+        el.classList.toggle('active', active);
+        if (active) {
+          catX = mouseX || window.innerWidth / 2;
+          catY = mouseY || window.innerHeight / 2;
+          idle = 0; place(); draw('alert', 0);
+          if (!timer) timer = setInterval(step, 100);
+        }
+      }
+
+      function step() {
+        if (!active) return;
+        tick++;
+        const dx = mouseX - catX, dy = mouseY - catY, d = Math.hypot(dx, dy);
+        if (d < SPEED + 6 || reduce) {
+          idle++;
+          if (idle < 8) draw('idle', 0);
+          else if (idle < 14) draw('tired', 0);
+          else draw('sleep', tick >> 1);
+        } else {
+          idle = 0;
+          draw(dir(dx, dy), tick);
+          catX += (dx / d) * SPEED;
+          catY += (dy / d) * SPEED;
+          place();
+        }
       }
 
       // Summon without typing: click the little atom on the landing.
       const atom = document.querySelector('.atom');
       if (atom) { atom.style.cursor = 'pointer'; atom.setAttribute('title', 'psst… click me'); atom.addEventListener('click', toggle); }
 
-      window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+      window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+      el.addEventListener('click', () => window.open(GH, '_blank', 'noopener'));
 
-      pet.addEventListener('mouseenter', () => { paused = true; say('click to meet my maker →', 2000); });
-      pet.addEventListener('mouseleave', () => { paused = false; });
-      pet.addEventListener('click', () => { window.open(GH, '_blank', 'noopener'); });
-
-      // Typed shortcuts (harmless; do not clash with the A-D answer keys).
+      // Typed shortcuts (harmless; never clash with the A-D answer keys).
       let buf = '';
       window.addEventListener('keydown', (e) => {
         const k = (e.key || '').toLowerCase();
         if (k.length !== 1) return;
-        buf = (buf + k).slice(-3);
-        if (buf === 'pet') { buf = ''; toggle(); }
-        else if (buf === 'ftw') { buf = ''; say('for the win →', 1200); window.open(GH, '_blank', 'noopener'); }
+        buf = (buf + k).slice(-4);
+        if (buf.endsWith('pet') || buf.endsWith('neko')) { buf = ''; toggle(); }
+        else if (buf.endsWith('ftw')) { buf = ''; window.open(GH, '_blank', 'noopener'); }
       });
-
-      (function blink() {
-        const wait = 2200 + Math.random() * 4200;
-        setTimeout(() => {
-          if (active && !reduce && eyes) { eyes.classList.add('blink'); setTimeout(() => eyes.classList.remove('blink'), 130); }
-          blink();
-        }, wait);
-      })();
-
-      const cheers = ['study time!', 'you got this', '1 more passage', 'stay hydrated', 'breathe', ':)'];
-      setInterval(() => { if (active && !paused && Math.random() < 0.5) say(cheers[Math.floor(Math.random() * cheers.length)], 1600); }, 13000);
-
-      let last = null;
-      function frame(t) {
-        requestAnimationFrame(frame);
-        if (!active) { last = t; return; }
-        if (last == null) { last = t; return; }
-        const dt = Math.min(0.05, (t - last) / 1000) || 0; last = t;
-        const targetX = tx + 18, targetY = ty + 24; // trail below-right of the cursor
-        const ease = reduce ? 1 : Math.min(1, 7 * dt);
-        if (!paused) {
-          const ndx = targetX - px, ndy = targetY - py;
-          px += ndx * ease; py += ndy * ease; vx = ndx; vy = ndy;
-        } else { vx *= 0.8; vy *= 0.8; }
-        const speed = Math.hypot(vx, vy);
-        const bob = reduce ? 0 : Math.sin(t / 320) * 2;
-        const squash = 1 + Math.min(0.16, speed * 0.0016);
-        const tilt = Math.max(-14, Math.min(14, vx * 0.4));
-        pet.style.transform = 'translate(' + (px - 23).toFixed(1) + 'px,' + (py - 26 + bob).toFixed(1) + 'px) rotate(' + tilt.toFixed(1) + 'deg) scale(' + (1 / squash).toFixed(3) + ',' + squash.toFixed(3) + ')';
-        const a = Math.atan2(vy, vx);
-        const look = Math.min(1.5, speed * 0.03);
-        pupils.forEach((p, i) => { p.setAttribute('cx', (base[i].x + Math.cos(a) * look).toFixed(2)); p.setAttribute('cy', (base[i].y + Math.sin(a) * look).toFixed(2)); });
-        if (bubble && bubble.classList.contains('show')) {
-          bubble.style.transform = 'translate(' + (px + 6).toFixed(0) + 'px,' + (py - 34).toFixed(0) + 'px)';
-        }
-      }
-      requestAnimationFrame(frame);
     })();
   </script>
 </body>
