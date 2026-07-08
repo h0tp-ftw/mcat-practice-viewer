@@ -72,7 +72,7 @@ See **[docs/FORMAT.md](docs/FORMAT.md)** for the exact JSON schema.
 | Key | Action | Key | Action |
 | --- | --- | --- | --- |
 | `A` `B` `C` `D` | Select a choice | `Alt`+`H` | Highlight selection |
-| `Alt`+`N` / `Alt`+`P` | Next / Previous | `Alt`+`E` | Erase highlights |
+| `Alt`+`N` / `Alt`+`P` | Next / Previous | `Alt`+`Shift`+`H` | Remove highlights |
 | `Alt`+`V` | Open navigator | `Alt`+`F` | Flag for review |
 | `Alt`+`T` | Periodic table | `Esc` | Close a modal |
 
