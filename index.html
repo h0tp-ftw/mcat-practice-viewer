@@ -131,6 +131,16 @@
     .timer-container.timers-hidden .timer-item { display: none; }
     .timer-container.timers-hidden .timers-show-hint { display: inline-flex; }
 
+    /* Clock paused while reviewing answers */
+    .timer-paused-note {
+      display: none;
+      font-style: italic;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+    .timer-container.timers-paused:not(.timers-hidden) .timer-item strong { opacity: 0.45; }
+    .timer-container.timers-paused:not(.timers-hidden) .timer-paused-note { display: inline-flex; align-items: center; }
+
     .timer-icon {
       opacity: 0.85;
       display: inline-flex;
@@ -1004,6 +1014,7 @@
           <span id="total-label">Total Time:</span> <strong id="total-timer">00:00</strong>
         </div>
         <span class="timers-show-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Show time</span>
+        <span class="timer-paused-note" title="The clock is paused while reviewing answers">&#10073;&#10073; paused</span>
       </div>
       <div class="review-toggle-container">
         <span>Review Answer</span>
@@ -1254,15 +1265,21 @@
       return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
+    // The clock is paused whenever answers are being reviewed — either the
+    // "Review Answer" switch is on, or we are in the end-of-section review.
+    function timersPaused() { return reviewSwitch.checked || isReviewMode; }
+
     function renderTimers() {
       qTimerEl.innerText = formatTime(questionSec);      // time on the current question
       totalLabel.innerText = 'Total Time:';
       totalTimerEl.innerText = formatTime(elapsedSec);   // total time across the section
+      document.getElementById('timer-container').classList.toggle('timers-paused', timersPaused());
     }
 
     function startTimers() {
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(() => {
+        if (timersPaused()) return; // clock blocked while reviewing answers
         elapsedSec++;
         questionSec++;
         renderTimers();
