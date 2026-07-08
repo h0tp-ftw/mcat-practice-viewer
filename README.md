@@ -2,8 +2,11 @@
 
 A single-file, offline web viewer for reviewing multiple-choice practice
 questions in a test-day-style interface — split passage/question panes,
-highlighter, answer elimination, a question navigator, a section timer, and
-per-question explanations.
+highlighter, answer elimination, a question navigator, a section timer, a
+built-in periodic table, and per-question explanations.
+
+It's one static `index.html` with **nothing to install or download** — open it
+locally, or deploy it to GitHub Pages and use it straight from the browser.
 
 > ⚠️ **Unofficial & content-free.** This project is **not affiliated with,
 > endorsed by, or sponsored by the Association of American Medical Colleges
@@ -32,19 +35,23 @@ per-question explanations.
 - **Section timer** — time on the current question and total time.
 - **Confidence tracker** — Low / Medium / High, colour-coded red / yellow /
   green.
-- **Periodic table** modal (bring your own image — see below).
+- **Built-in periodic table** — a full 118-element table rendered from data,
+  so it works offline with no image or download.
+- **Load your own set** via the button *or by dragging a `.json` onto the page*.
 - **100% offline & dependency-free.** One `index.html`, no build step, no
   network calls, no trackers.
 
 ## Quick start
 
-**Locally:** just open `index.html` in any modern browser (or serve the
-folder, e.g. `python3 -m http.server`, and visit it). It loads the bundled
-`sample.json` demo automatically.
+**Locally:** open `index.html` in any modern browser — or serve the folder
+(`python3 -m http.server`) and visit it. The bundled `sample.json` demo loads
+automatically; nothing to install.
 
-**On the web (GitHub Pages):** enable **Settings → Pages → Deploy from
-branch → main / root**. Because the app is `index.html`, your site goes live
-at `https://<user>.github.io/<repo>/` with the demo pre-loaded.
+**Live on the web (GitHub Pages):** this repo ships a Pages deploy workflow
+(`.github/workflows/deploy-pages.yml`). Enable **Settings → Pages → Build and
+deployment → Source: GitHub Actions**, then push to `main`. The site goes live
+at `https://<user>.github.io/<repo>/` with the demo pre-loaded — visitors just
+click the link and use it, no install or download.
 
 ## Loading your own questions
 
@@ -53,8 +60,9 @@ Three ways, in order of convenience:
 1. **Auto-load** — save your set as **`content.json`** in the app folder.
    The viewer loads it on startup. `content.json` is **git-ignored**, so it
    is never committed or published.
-2. **Load JSON button** (top-right) — open any `.json` file on demand.
-3. Replace `sample.json` for a different bundled demo (keep it synthetic —
+2. **Drag & drop** — drop a `.json` file anywhere on the page.
+3. **Load JSON button** (top-right) — open any `.json` file on demand.
+4. Replace `sample.json` for a different bundled demo (keep it synthetic —
    it *is* published).
 
 See **[docs/FORMAT.md](docs/FORMAT.md)** for the exact JSON schema.
@@ -73,18 +81,18 @@ with no selection to clear all highlights on the current screen.
 
 ## Periodic table
 
-The periodic-table modal loads an image named `periodic_table.jpg` from the
-app folder. No image is bundled (to avoid shipping third-party art); drop in
-your own and it appears automatically. Without one, the modal shows a short
-placeholder note.
+The periodic table is **built in** — a full 118-element table (atomic number,
+symbol, and standard atomic weight) rendered from data, so it works offline
+with no image or download. Open it with the ⚛ toolbar button or **Alt+T**.
 
 ## Project layout
 
 ```
-index.html        The entire app (HTML + CSS + JS, no dependencies)
-sample.json       Synthetic demo content (safe to publish)
-docs/FORMAT.md    JSON question-format specification
-LICENSE           GNU GPL v3
+index.html              The entire app (HTML + CSS + JS, no dependencies)
+sample.json             Synthetic demo content (safe to publish)
+docs/FORMAT.md          JSON question-format specification
+.github/workflows/      GitHub Pages auto-deploy
+LICENSE                 GNU GPL v3
 ```
 
 ## Contributing

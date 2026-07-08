@@ -710,6 +710,59 @@
       cursor: pointer;
     }
 
+    /* Self-contained periodic table (plain monochrome, like the exam's) */
+    #pt-grid {
+      display: grid;
+      grid-template-columns: repeat(18, minmax(38px, 1fr));
+      grid-auto-rows: 48px;
+      gap: 2px;
+      min-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    .pt-el {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #333;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.05;
+      padding: 2px 1px;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .pt-el .pt-z { font-size: 8px; align-self: flex-start; margin-left: 3px; }
+    .pt-el .pt-sym { font-size: 15px; font-weight: bold; }
+    .pt-el .pt-mass { font-size: 7px; }
+
+    .pt-el.pt-marker {
+      border-style: dashed;
+      color: #555;
+      justify-content: center;
+    }
+
+    /* Drag-and-drop overlay */
+    body.dragging::after {
+      content: "Drop a .json practice set to load it";
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11, 74, 114, 0.82);
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 700;
+      border: 4px dashed rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
@@ -802,7 +855,11 @@
         <line x1="16" y1="17" x2="8" y2="17"></line>
         <polyline points="10 9 9 9 8 9"></polyline>
       </svg>
-      <p>Load an extracted AAMC JSON file to start reviewing.</p>
+      <p style="max-width: 440px; text-align: center;">
+        Drag a practice-set <strong>.json</strong> file anywhere onto this page, or click
+        <strong>Load JSON</strong> (top-right), to start reviewing.
+        See the README for the file format.
+      </p>
     </div>
   </div>
 
@@ -845,17 +902,13 @@
 
   <!-- Periodic Table Modal -->
   <div class="modal-overlay" id="pt-modal">
-    <div class="modal-content" style="max-width: 1000px; height: 85%;">
+    <div class="modal-content" style="max-width: 1100px; height: 88%;">
       <div class="modal-header">
         <span>Periodic Table of the Elements</span>
         <button class="modal-close" id="pt-close">&times;</button>
       </div>
-      <div class="modal-body" style="display: flex; align-items: center; justify-content: center; padding: 0.5rem; background: #fff;">
-        <img src="periodic_table.jpg" alt="Periodic Table of Elements" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'; document.getElementById('pt-missing').style.display='block';">
-        <div id="pt-missing" style="display:none; padding:2rem; text-align:center; color:#333; line-height:1.6;">
-          No periodic table image found.<br>
-          Drop a <code>periodic_table.jpg</code> into the app folder to show one here.
-        </div>
+      <div class="modal-body" style="background: #fff; overflow: auto;">
+        <div id="pt-grid" aria-label="Periodic table of the elements"></div>
       </div>
     </div>
   </div>
@@ -976,10 +1029,162 @@
     });
 
     /* ---------- Modals ---------- */
+    const PT_ELEMENTS = [
+      {z:1,s:"H",n:"Hydrogen",m:"1.008",c:"nonmetal",col:1,row:1},
+      {z:2,s:"He",n:"Helium",m:"4.003",c:"noble",col:18,row:1},
+      {z:3,s:"Li",n:"Lithium",m:"6.94",c:"alkali",col:1,row:2},
+      {z:4,s:"Be",n:"Beryllium",m:"9.012",c:"alkaline",col:2,row:2},
+      {z:5,s:"B",n:"Boron",m:"10.81",c:"metalloid",col:13,row:2},
+      {z:6,s:"C",n:"Carbon",m:"12.011",c:"nonmetal",col:14,row:2},
+      {z:7,s:"N",n:"Nitrogen",m:"14.007",c:"nonmetal",col:15,row:2},
+      {z:8,s:"O",n:"Oxygen",m:"15.999",c:"nonmetal",col:16,row:2},
+      {z:9,s:"F",n:"Fluorine",m:"18.998",c:"halogen",col:17,row:2},
+      {z:10,s:"Ne",n:"Neon",m:"20.180",c:"noble",col:18,row:2},
+      {z:11,s:"Na",n:"Sodium",m:"22.990",c:"alkali",col:1,row:3},
+      {z:12,s:"Mg",n:"Magnesium",m:"24.305",c:"alkaline",col:2,row:3},
+      {z:13,s:"Al",n:"Aluminum",m:"26.982",c:"post",col:13,row:3},
+      {z:14,s:"Si",n:"Silicon",m:"28.085",c:"metalloid",col:14,row:3},
+      {z:15,s:"P",n:"Phosphorus",m:"30.974",c:"nonmetal",col:15,row:3},
+      {z:16,s:"S",n:"Sulfur",m:"32.06",c:"nonmetal",col:16,row:3},
+      {z:17,s:"Cl",n:"Chlorine",m:"35.45",c:"halogen",col:17,row:3},
+      {z:18,s:"Ar",n:"Argon",m:"39.95",c:"noble",col:18,row:3},
+      {z:19,s:"K",n:"Potassium",m:"39.098",c:"alkali",col:1,row:4},
+      {z:20,s:"Ca",n:"Calcium",m:"40.078",c:"alkaline",col:2,row:4},
+      {z:21,s:"Sc",n:"Scandium",m:"44.956",c:"transition",col:3,row:4},
+      {z:22,s:"Ti",n:"Titanium",m:"47.867",c:"transition",col:4,row:4},
+      {z:23,s:"V",n:"Vanadium",m:"50.942",c:"transition",col:5,row:4},
+      {z:24,s:"Cr",n:"Chromium",m:"51.996",c:"transition",col:6,row:4},
+      {z:25,s:"Mn",n:"Manganese",m:"54.938",c:"transition",col:7,row:4},
+      {z:26,s:"Fe",n:"Iron",m:"55.845",c:"transition",col:8,row:4},
+      {z:27,s:"Co",n:"Cobalt",m:"58.933",c:"transition",col:9,row:4},
+      {z:28,s:"Ni",n:"Nickel",m:"58.693",c:"transition",col:10,row:4},
+      {z:29,s:"Cu",n:"Copper",m:"63.546",c:"transition",col:11,row:4},
+      {z:30,s:"Zn",n:"Zinc",m:"65.38",c:"transition",col:12,row:4},
+      {z:31,s:"Ga",n:"Gallium",m:"69.723",c:"post",col:13,row:4},
+      {z:32,s:"Ge",n:"Germanium",m:"72.630",c:"metalloid",col:14,row:4},
+      {z:33,s:"As",n:"Arsenic",m:"74.922",c:"metalloid",col:15,row:4},
+      {z:34,s:"Se",n:"Selenium",m:"78.971",c:"nonmetal",col:16,row:4},
+      {z:35,s:"Br",n:"Bromine",m:"79.904",c:"halogen",col:17,row:4},
+      {z:36,s:"Kr",n:"Krypton",m:"83.798",c:"noble",col:18,row:4},
+      {z:37,s:"Rb",n:"Rubidium",m:"85.468",c:"alkali",col:1,row:5},
+      {z:38,s:"Sr",n:"Strontium",m:"87.62",c:"alkaline",col:2,row:5},
+      {z:39,s:"Y",n:"Yttrium",m:"88.906",c:"transition",col:3,row:5},
+      {z:40,s:"Zr",n:"Zirconium",m:"91.224",c:"transition",col:4,row:5},
+      {z:41,s:"Nb",n:"Niobium",m:"92.906",c:"transition",col:5,row:5},
+      {z:42,s:"Mo",n:"Molybdenum",m:"95.95",c:"transition",col:6,row:5},
+      {z:43,s:"Tc",n:"Technetium",m:"[98]",c:"transition",col:7,row:5},
+      {z:44,s:"Ru",n:"Ruthenium",m:"101.07",c:"transition",col:8,row:5},
+      {z:45,s:"Rh",n:"Rhodium",m:"102.91",c:"transition",col:9,row:5},
+      {z:46,s:"Pd",n:"Palladium",m:"106.42",c:"transition",col:10,row:5},
+      {z:47,s:"Ag",n:"Silver",m:"107.87",c:"transition",col:11,row:5},
+      {z:48,s:"Cd",n:"Cadmium",m:"112.41",c:"transition",col:12,row:5},
+      {z:49,s:"In",n:"Indium",m:"114.82",c:"post",col:13,row:5},
+      {z:50,s:"Sn",n:"Tin",m:"118.71",c:"post",col:14,row:5},
+      {z:51,s:"Sb",n:"Antimony",m:"121.76",c:"metalloid",col:15,row:5},
+      {z:52,s:"Te",n:"Tellurium",m:"127.60",c:"metalloid",col:16,row:5},
+      {z:53,s:"I",n:"Iodine",m:"126.90",c:"halogen",col:17,row:5},
+      {z:54,s:"Xe",n:"Xenon",m:"131.29",c:"noble",col:18,row:5},
+      {z:55,s:"Cs",n:"Cesium",m:"132.91",c:"alkali",col:1,row:6},
+      {z:56,s:"Ba",n:"Barium",m:"137.33",c:"alkaline",col:2,row:6},
+      {z:57,s:"La",n:"Lanthanum",m:"138.91",c:"lanthanide",col:3,row:9},
+      {z:58,s:"Ce",n:"Cerium",m:"140.12",c:"lanthanide",col:4,row:9},
+      {z:59,s:"Pr",n:"Praseodymium",m:"140.91",c:"lanthanide",col:5,row:9},
+      {z:60,s:"Nd",n:"Neodymium",m:"144.24",c:"lanthanide",col:6,row:9},
+      {z:61,s:"Pm",n:"Promethium",m:"[145]",c:"lanthanide",col:7,row:9},
+      {z:62,s:"Sm",n:"Samarium",m:"150.36",c:"lanthanide",col:8,row:9},
+      {z:63,s:"Eu",n:"Europium",m:"151.96",c:"lanthanide",col:9,row:9},
+      {z:64,s:"Gd",n:"Gadolinium",m:"157.25",c:"lanthanide",col:10,row:9},
+      {z:65,s:"Tb",n:"Terbium",m:"158.93",c:"lanthanide",col:11,row:9},
+      {z:66,s:"Dy",n:"Dysprosium",m:"162.50",c:"lanthanide",col:12,row:9},
+      {z:67,s:"Ho",n:"Holmium",m:"164.93",c:"lanthanide",col:13,row:9},
+      {z:68,s:"Er",n:"Erbium",m:"167.26",c:"lanthanide",col:14,row:9},
+      {z:69,s:"Tm",n:"Thulium",m:"168.93",c:"lanthanide",col:15,row:9},
+      {z:70,s:"Yb",n:"Ytterbium",m:"173.05",c:"lanthanide",col:16,row:9},
+      {z:71,s:"Lu",n:"Lutetium",m:"174.97",c:"lanthanide",col:17,row:9},
+      {z:72,s:"Hf",n:"Hafnium",m:"178.49",c:"transition",col:4,row:6},
+      {z:73,s:"Ta",n:"Tantalum",m:"180.95",c:"transition",col:5,row:6},
+      {z:74,s:"W",n:"Tungsten",m:"183.84",c:"transition",col:6,row:6},
+      {z:75,s:"Re",n:"Rhenium",m:"186.21",c:"transition",col:7,row:6},
+      {z:76,s:"Os",n:"Osmium",m:"190.23",c:"transition",col:8,row:6},
+      {z:77,s:"Ir",n:"Iridium",m:"192.22",c:"transition",col:9,row:6},
+      {z:78,s:"Pt",n:"Platinum",m:"195.08",c:"transition",col:10,row:6},
+      {z:79,s:"Au",n:"Gold",m:"196.97",c:"transition",col:11,row:6},
+      {z:80,s:"Hg",n:"Mercury",m:"200.59",c:"transition",col:12,row:6},
+      {z:81,s:"Tl",n:"Thallium",m:"204.38",c:"post",col:13,row:6},
+      {z:82,s:"Pb",n:"Lead",m:"207.2",c:"post",col:14,row:6},
+      {z:83,s:"Bi",n:"Bismuth",m:"208.98",c:"post",col:15,row:6},
+      {z:84,s:"Po",n:"Polonium",m:"[209]",c:"post",col:16,row:6},
+      {z:85,s:"At",n:"Astatine",m:"[210]",c:"halogen",col:17,row:6},
+      {z:86,s:"Rn",n:"Radon",m:"[222]",c:"noble",col:18,row:6},
+      {z:87,s:"Fr",n:"Francium",m:"[223]",c:"alkali",col:1,row:7},
+      {z:88,s:"Ra",n:"Radium",m:"[226]",c:"alkaline",col:2,row:7},
+      {z:89,s:"Ac",n:"Actinium",m:"[227]",c:"actinide",col:3,row:10},
+      {z:90,s:"Th",n:"Thorium",m:"232.04",c:"actinide",col:4,row:10},
+      {z:91,s:"Pa",n:"Protactinium",m:"231.04",c:"actinide",col:5,row:10},
+      {z:92,s:"U",n:"Uranium",m:"238.03",c:"actinide",col:6,row:10},
+      {z:93,s:"Np",n:"Neptunium",m:"[237]",c:"actinide",col:7,row:10},
+      {z:94,s:"Pu",n:"Plutonium",m:"[244]",c:"actinide",col:8,row:10},
+      {z:95,s:"Am",n:"Americium",m:"[243]",c:"actinide",col:9,row:10},
+      {z:96,s:"Cm",n:"Curium",m:"[247]",c:"actinide",col:10,row:10},
+      {z:97,s:"Bk",n:"Berkelium",m:"[247]",c:"actinide",col:11,row:10},
+      {z:98,s:"Cf",n:"Californium",m:"[251]",c:"actinide",col:12,row:10},
+      {z:99,s:"Es",n:"Einsteinium",m:"[252]",c:"actinide",col:13,row:10},
+      {z:100,s:"Fm",n:"Fermium",m:"[257]",c:"actinide",col:14,row:10},
+      {z:101,s:"Md",n:"Mendelevium",m:"[258]",c:"actinide",col:15,row:10},
+      {z:102,s:"No",n:"Nobelium",m:"[259]",c:"actinide",col:16,row:10},
+      {z:103,s:"Lr",n:"Lawrencium",m:"[266]",c:"actinide",col:17,row:10},
+      {z:104,s:"Rf",n:"Rutherfordium",m:"[267]",c:"transition",col:4,row:7},
+      {z:105,s:"Db",n:"Dubnium",m:"[268]",c:"transition",col:5,row:7},
+      {z:106,s:"Sg",n:"Seaborgium",m:"[269]",c:"transition",col:6,row:7},
+      {z:107,s:"Bh",n:"Bohrium",m:"[270]",c:"transition",col:7,row:7},
+      {z:108,s:"Hs",n:"Hassium",m:"[277]",c:"transition",col:8,row:7},
+      {z:109,s:"Mt",n:"Meitnerium",m:"[278]",c:"unknown",col:9,row:7},
+      {z:110,s:"Ds",n:"Darmstadtium",m:"[281]",c:"unknown",col:10,row:7},
+      {z:111,s:"Rg",n:"Roentgenium",m:"[282]",c:"unknown",col:11,row:7},
+      {z:112,s:"Cn",n:"Copernicium",m:"[285]",c:"transition",col:12,row:7},
+      {z:113,s:"Nh",n:"Nihonium",m:"[286]",c:"post",col:13,row:7},
+      {z:114,s:"Fl",n:"Flerovium",m:"[289]",c:"post",col:14,row:7},
+      {z:115,s:"Mc",n:"Moscovium",m:"[290]",c:"post",col:15,row:7},
+      {z:116,s:"Lv",n:"Livermorium",m:"[293]",c:"post",col:16,row:7},
+      {z:117,s:"Ts",n:"Tennessine",m:"[294]",c:"halogen",col:17,row:7},
+      {z:118,s:"Og",n:"Oganesson",m:"[294]",c:"noble",col:18,row:7}
+    ];
+
     function togglePeriodicTable() {
       const open = ptModal.style.display === 'flex';
+      if (!open) buildPeriodicTable();
       ptModal.style.display = open ? 'none' : 'flex';
       toolPt.classList.toggle('active', !open);
+    }
+
+    // Self-contained periodic table (factual element data, no external image).
+    function buildPeriodicTable() {
+      const grid = document.getElementById('pt-grid');
+      if (grid.dataset.built) return;
+      const frag = document.createDocumentFragment();
+      PT_ELEMENTS.forEach(el => {
+        const cell = document.createElement('div');
+        cell.className = 'pt-el cat-' + el.c;
+        cell.style.gridColumn = el.col;
+        cell.style.gridRow = el.row;
+        cell.title = `${el.z} — ${el.n} (${el.m})`;
+        cell.innerHTML =
+          `<span class="pt-z">${el.z}</span>` +
+          `<span class="pt-sym">${el.s}</span>` +
+          `<span class="pt-mass">${el.m}</span>`;
+        frag.appendChild(cell);
+      });
+      // Placeholders in the main grid pointing at the two f-block rows.
+      [['57–71', 3, 6], ['89–103', 3, 7]].forEach(([label, col, row]) => {
+        const m = document.createElement('div');
+        m.className = 'pt-el pt-marker';
+        m.style.gridColumn = col;
+        m.style.gridRow = row;
+        m.innerHTML = `<span class="pt-sym" style="font-size:0.6em">${label}</span>`;
+        frag.appendChild(m);
+      });
+      grid.appendChild(frag);
+      grid.dataset.built = '1';
     }
 
     function toggleNavigator() {
@@ -1167,20 +1372,47 @@
       })(0);
     });
 
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
+    function loadFile(file) {
       if (!file) return;
       const reader = new FileReader();
       reader.onload = (event) => {
         try {
           const data = JSON.parse(event.target.result);
-          const prettyName = file.name.replace('.json', '').replace(/_/g, ' ');
+          const prettyName = file.name.replace(/\.json$/i, '').replace(/_/g, ' ');
           loadQuizData(data, prettyName);
         } catch (err) {
-          alert('Failed to parse JSON file.');
+          alert('Could not read "' + file.name + '" as a valid JSON question set.');
         }
       };
       reader.readAsText(file);
+    }
+
+    fileInput.addEventListener('change', (e) => loadFile(e.target.files[0]));
+
+    // Drag-and-drop a .json file anywhere on the page to load it.
+    function dragHasFiles(e) {
+      return e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files');
+    }
+    let dragDepth = 0;
+    document.addEventListener('dragenter', (e) => {
+      if (!dragHasFiles(e)) return;
+      e.preventDefault();
+      dragDepth++;
+      document.body.classList.add('dragging');
+    });
+    document.addEventListener('dragover', (e) => { if (dragHasFiles(e)) e.preventDefault(); });
+    document.addEventListener('dragleave', (e) => {
+      if (!dragHasFiles(e)) return;
+      dragDepth = Math.max(0, dragDepth - 1);
+      if (dragDepth === 0) document.body.classList.remove('dragging');
+    });
+    document.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragDepth = 0;
+      document.body.classList.remove('dragging');
+      const files = Array.from((e.dataTransfer && e.dataTransfer.files) || []);
+      const jsonFile = files.find(f => f.name.toLowerCase().endsWith('.json')) || files[0];
+      if (jsonFile) loadFile(jsonFile);
     });
 
     function resetAttemptState() {
