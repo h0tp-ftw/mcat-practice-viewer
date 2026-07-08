@@ -704,6 +704,11 @@
       opacity: 0.5;
     }
 
+    .discrete-note {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
     mark {
       background-color: var(--highlight-color);
       color: #000;
@@ -1505,7 +1510,13 @@
 
         passageContent.innerHTML = (q.passage_id && passageAnnotations[q.passage_id]) || q.passageHtml;
       } else {
-        passagePane.style.display = 'none';
+        // Discrete question: keep the two-pane layout (as the real exam does)
+        // and note in the left pane that the item is independent of a passage.
+        passagePane.style.display = 'block';
+        passageTitle.style.display = 'none';
+        passageContent.innerHTML =
+          '<p class="discrete-note">This question is not based on a passage and is ' +
+          'independent of the other questions.</p>';
       }
 
       // Question stem (restore any saved highlights)

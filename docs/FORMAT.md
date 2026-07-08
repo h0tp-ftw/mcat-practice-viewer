@@ -11,7 +11,7 @@ viewer understands.
 | `id` | number | ✅ | Unique id for the question. |
 | `order` | number | ✅ | Sort position within the set (ascending). |
 | `passage_id` | number \| null | — | Groups questions that share a passage. Use the same value for every question under one passage. `null`/omitted = discrete question. |
-| `passageHtml` | string \| null | — | HTML for the left passage pane. If `null`/omitted, the question renders full-width with no passage pane. |
+| `passageHtml` | string \| null | — | HTML for the left passage pane. If `null`/omitted, the question is treated as discrete: the two-pane layout is kept and the left pane shows a note that the item is independent of a passage. |
 | `question_content` | string | ✅ | HTML for the question stem. |
 | `answer_choices` | array | ✅ | List of choice objects (see below). MCAT items use 4. |
 | `correct_answer` | string | — | Letter of the answer (e.g. `"C"`). Reference only — correctness is taken from the `correct` flags, not this field. |
@@ -62,5 +62,6 @@ viewer understands.
 ```
 
 A discrete (non-passage) question simply sets `"passageHtml": null` (or omits
-it) and `"passage_id": null`. See [`../sample.json`](../sample.json) for a
-complete, working four-question example.
+it) and `"passage_id": null`; the viewer keeps the two-pane layout and shows an
+"independent of a passage" note in the left pane. See
+[`../sample.json`](../sample.json) for a complete, working four-question example.

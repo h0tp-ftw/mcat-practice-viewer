@@ -49,7 +49,7 @@
     "order": 4,
     "passage_id": null,
     "passageHtml": null,
-    "question_content": "<p><em>(This standalone item demonstrates the single-column layout used for discrete, non-passage questions.)</em></p><p>A researcher finds that students who study in short, spaced sessions remember more a week later than students who study the same total time in one long session. This finding is best explained by:</p>",
+    "question_content": "<p>A researcher finds that students who study in short, spaced sessions remember more a week later than students who study the same total time in one long session. This finding is best explained by:</p>",
     "answer_choices": [
       { "id": 41, "sort_order": 0, "choice_content": "<p>the spacing effect.</p>", "correct": true },
       { "id": 42, "sort_order": 1, "choice_content": "<p>the primacy effect.</p>", "correct": false },
