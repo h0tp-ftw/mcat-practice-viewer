@@ -30,6 +30,11 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # Enable Pages (with the GitHub Actions build type) if it isn't
+          # already, so the very first push deploys cleanly with no manual
+          # setup — including on forks.
+          enablement: true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
