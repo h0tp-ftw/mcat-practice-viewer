@@ -920,7 +920,8 @@
       will-change: left, top;
     }
 
-    #oneko.active { display: block; }
+    /* oneko only lives on the landing page. */
+    body.landing #oneko.active { display: block; }
 
     .discrete-note {
       color: var(--text-muted);
@@ -1634,6 +1635,7 @@
       footer.style.display = 'none';
       summaryPane.style.display = 'none';
       introPane.style.display = 'flex';
+      document.body.classList.add('landing');
       headerTitle.innerText = 'MCAT Practice Viewer';
       showExamHeader(false);
     }
@@ -1730,6 +1732,7 @@
 
       headerTitle.innerText = title;
       introPane.style.display = 'none';
+      document.body.classList.remove('landing');
       viewerPane.style.display = 'none';
       subNavbar.style.display = 'none';
       footer.style.display = 'none';
@@ -2261,10 +2264,9 @@
       }
 
       function step() {
-        // Never intercept clicks over the actual test UI — only clickable on
-        // the landing, where the "click me" easter egg lives.
-        el.style.pointerEvents = (introPane.style.display !== 'none') ? 'auto' : 'none';
-        if (!active) return;
+        // oneko only lives on the landing; hidden (display:none) elsewhere, so
+        // it never touches the quiz. No animation work while off the landing.
+        if (!active || !document.body.classList.contains('landing')) return;
         tick++;
         const dx = mouseX - catX, dy = mouseY - catY, d = Math.hypot(dx, dy);
         if (d < SPEED + 6 || reduce) {
