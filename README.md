@@ -65,7 +65,9 @@ Three ways, in order of convenience:
 4. Replace `sample.json` for a different bundled demo (keep it synthetic —
    it *is* published).
 
-See **[docs/FORMAT.md](docs/FORMAT.md)** for the exact JSON schema.
+See the format spec — on the site at **`format.html`** (linked from the landing
+page), or in the repo at **[docs/FORMAT.md](docs/FORMAT.md)** — for the exact
+JSON schema and a copyable example.
 
 ## Keyboard shortcuts
 

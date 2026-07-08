@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question-set format — MCAT-Style Practice Viewer</title>
+  <style>
+    :root {
+      --bar: #163a5e; --accent: #0b5c9e; --page: #e6e9ed; --pane: #fff;
+      --text: #1a1a1a; --muted: #5a6169; --border: #c3ccd4; --code-bg: #f2f4f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--page); color: var(--text);
+      font-family: Arial, Helvetica, sans-serif; line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(to bottom, #1b4a76, var(--bar));
+      color: #fff; padding: 0 1.5rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    header .h-title { font-weight: 700; }
+    header a { color: #dce8f3; text-decoration: none; font-size: 0.9rem; }
+    header a:hover { text-decoration: underline; }
+    main { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .card {
+      background: var(--pane); border: 1px solid var(--border);
+      border-radius: 6px; padding: 2rem 2.25rem; box-shadow: 0 2px 10px rgba(15,40,70,.06);
+    }
+    h1 { font-size: 1.6rem; margin: 0 0 0.4rem; }
+    .lead { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.5rem; }
+    h2 { font-size: 1.1rem; margin: 2rem 0 0.6rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    h2:first-of-type { border-top: none; padding-top: 0; }
+    p { margin: 0 0 0.9rem; }
+    code { font-family: Consolas, "SF Mono", Menlo, monospace; font-size: 0.9em; background: var(--code-bg); border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 1rem; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: left; vertical-align: top; }
+    th { background: var(--code-bg); }
+    td code { background: transparent; border: none; padding: 0; }
+    ul { padding-left: 1.25rem; }
+    li { margin-bottom: 0.4rem; }
+    .req { color: #2e7d32; font-weight: 700; }
+    .opt { color: var(--muted); }
+    .example-wrap { position: relative; }
+    pre {
+      background: #0f2436; color: #e6edf3; border-radius: 6px;
+      padding: 1.1rem 1.25rem; overflow: auto; font-size: 0.85rem; line-height: 1.5;
+      font-family: Consolas, "SF Mono", Menlo, monospace;
+    }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3);
+      border-radius: 4px; padding: 0.25rem 0.7rem; font-size: 0.8rem; cursor: pointer;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,.22); }
+    .btn {
+      display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+      padding: 0.5rem 1.4rem; border-radius: 3px; font-weight: 700; font-size: 0.9rem;
+    }
+    .btn:hover { background: #0a4d84; }
+    .foot { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+    .note { background: #f5f9fd; border-left: 4px solid var(--accent); padding: 0.75rem 1rem; border-radius: 4px; margin: 0.5rem 0 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="h-title">Question-set format</span>
+    <a href="index.html">&larr; Back to the viewer</a>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>How to build a question set</h1>
+      <p class="lead">A question set is a single <code>.json</code> file. Load it into the
+        viewer by dragging it anywhere onto the page, or using <strong>Load JSON</strong> in
+        the top bar. This page describes exactly what that file should contain.</p>
+
+      <h2>The file</h2>
+      <p>The file is a JSON <strong>array</strong> of question objects. The viewer sorts them
+        by their <code>order</code> field before showing them. Each object is one question.</p>
+
+      <h2>Question object</h2>
+      <table>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>What it does</th></tr>
+        <tr><td><code>id</code></td><td>number</td><td><span class="req">yes</span></td><td>A unique id for the question.</td></tr>
+        <tr><td><code>order</code></td><td>number</td><td><span class="req">yes</span></td><td>Position in the set (questions are shown in ascending order).</td></tr>
+        <tr><td><code>passage_id</code></td><td>number or null</td><td class="opt">optional</td><td>Give every question that shares one passage the <em>same</em> value, so they are grouped. Use <code>null</code> for a standalone (discrete) question.</td></tr>
+        <tr><td><code>passageHtml</code></td><td>string or null</td><td class="opt">optional</td><td>HTML shown in the left passage pane. Use <code>null</code> for a discrete question (the viewer keeps the two-pane layout and notes that the item is independent of a passage).</td></tr>
+        <tr><td><code>question_content</code></td><td>string</td><td><span class="req">yes</span></td><td>HTML for the question stem.</td></tr>
+        <tr><td><code>answer_choices</code></td><td>array</td><td><span class="req">yes</span></td><td>The list of choice objects (see below). MCAT items use four.</td></tr>
+        <tr><td><code>correct_answer</code></td><td>string</td><td class="opt">optional</td><td>The correct letter, e.g. <code>"C"</code>. Display only — correctness is taken from the <code>correct</code> flags, not this field.</td></tr>
+        <tr><td><code>answer_content</code></td><td>string</td><td class="opt">optional</td><td>HTML explanation, shown when the answer is revealed.</td></tr>
+      </table>
+
+      <h2>Choice object</h2>
+      <table>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>What it does</th></tr>
+        <tr><td><code>id</code></td><td>number</td><td><span class="req">yes</span></td><td>Unique within the question.</td></tr>
+        <tr><td><code>sort_order</code></td><td>number</td><td><span class="req">yes</span></td><td>0-based. Becomes the letter: <code>0&rarr;A</code>, <code>1&rarr;B</code>, <code>2&rarr;C</code>, <code>3&rarr;D</code>.</td></tr>
+        <tr><td><code>choice_content</code></td><td>string</td><td><span class="req">yes</span></td><td>HTML for the choice text.</td></tr>
+        <tr><td><code>correct</code></td><td>boolean</td><td><span class="req">yes</span></td><td>Exactly <strong>one</strong> choice per question must be <code>true</code>.</td></tr>
+      </table>
+
+      <h2>Good to know</h2>
+      <ul>
+        <li><strong>Passages.</strong> Questions with the same <code>passage_id</code> are treated as one passage and numbered in the order they first appear.</li>
+        <li><strong>Passage titles.</strong> If your <code>passageHtml</code> already begins with a header like <code>Passage&nbsp;1 (3&nbsp;questions)</code>, the viewer hides its own generated title to avoid a duplicate. If it doesn't, the viewer adds one for you.</li>
+        <li><strong>Discrete questions.</strong> Set both <code>passage_id</code> and <code>passageHtml</code> to <code>null</code>.</li>
+        <li><strong>HTML is rendered.</strong> The passage, stem, choices, and explanation are inserted as HTML, so use tags like <code>&lt;p&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, tables, etc. Only load content you trust.</li>
+        <li><strong>Images.</strong> Reference a local file with a relative path, e.g. <code>&lt;img src="./images/figure1.png"&gt;</code>. Remote <code>http(s)</code> URLs only work while online.</li>
+        <li><strong>Keep a local copy.</strong> The viewer auto-loads a file named <code>content.json</code> if it sits next to the app, so you can drop your set in as <code>content.json</code> to have it open on startup.</li>
+      </ul>
+
+      <h2>Complete example</h2>
+      <p>A minimal, working set: one passage with two questions, plus one discrete question.
+        Copy it, replace the placeholder text, and load it into the viewer.</p>
+      <div class="example-wrap">
+        <button class="copy-btn" id="copy-btn">Copy</button>
+        <pre><code id="example">[
+  {
+    "id": 1,
+    "order": 1,
+    "passage_id": 100,
+    "passageHtml": "&lt;p&gt;&lt;strong&gt;Passage 1 (2 questions)&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your passage text goes here…&lt;/p&gt;",
+    "question_content": "&lt;p&gt;What is the author's main point?&lt;/p&gt;",
+    "answer_choices": [
+      { "id": 11, "sort_order": 0, "choice_content": "&lt;p&gt;First choice&lt;/p&gt;",  "correct": false },
+      { "id": 12, "sort_order": 1, "choice_content": "&lt;p&gt;Second choice&lt;/p&gt;", "correct": true  },
+      { "id": 13, "sort_order": 2, "choice_content": "&lt;p&gt;Third choice&lt;/p&gt;",  "correct": false },
+      { "id": 14, "sort_order": 3, "choice_content": "&lt;p&gt;Fourth choice&lt;/p&gt;", "correct": false }
+    ],
+    "correct_answer": "B",
+    "answer_content": "&lt;p&gt;&lt;strong&gt;The answer is B.&lt;/strong&gt; Because…&lt;/p&gt;"
+  },
+  {
+    "id": 2,
+    "order": 2,
+    "passage_id": 100,
+    "passageHtml": "&lt;p&gt;&lt;strong&gt;Passage 1 (2 questions)&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your passage text goes here…&lt;/p&gt;",
+    "question_content": "&lt;p&gt;A second question about the same passage.&lt;/p&gt;",
+    "answer_choices": [
+      { "id": 21, "sort_order": 0, "choice_content": "&lt;p&gt;First choice&lt;/p&gt;",  "correct": true  },
+      { "id": 22, "sort_order": 1, "choice_content": "&lt;p&gt;Second choice&lt;/p&gt;", "correct": false },
+      { "id": 23, "sort_order": 2, "choice_content": "&lt;p&gt;Third choice&lt;/p&gt;",  "correct": false },
+      { "id": 24, "sort_order": 3, "choice_content": "&lt;p&gt;Fourth choice&lt;/p&gt;", "correct": false }
+    ],
+    "correct_answer": "A",
+    "answer_content": "&lt;p&gt;&lt;strong&gt;The answer is A.&lt;/strong&gt;&lt;/p&gt;"
+  },
+  {
+    "id": 3,
+    "order": 3,
+    "passage_id": null,
+    "passageHtml": null,
+    "question_content": "&lt;p&gt;A standalone question that is not based on a passage.&lt;/p&gt;",
+    "answer_choices": [
+      { "id": 31, "sort_order": 0, "choice_content": "&lt;p&gt;First choice&lt;/p&gt;",  "correct": false },
+      { "id": 32, "sort_order": 1, "choice_content": "&lt;p&gt;Second choice&lt;/p&gt;", "correct": false },
+      { "id": 33, "sort_order": 2, "choice_content": "&lt;p&gt;Third choice&lt;/p&gt;",  "correct": true  },
+      { "id": 34, "sort_order": 3, "choice_content": "&lt;p&gt;Fourth choice&lt;/p&gt;", "correct": false }
+    ],
+    "correct_answer": "C",
+    "answer_content": "&lt;p&gt;&lt;strong&gt;The answer is C.&lt;/strong&gt;&lt;/p&gt;"
+  }
+]</code></pre>
+      </div>
+
+      <p style="margin-top:1.5rem;"><a class="btn" href="index.html">Open the viewer &rarr;</a></p>
+
+      <p class="foot">Tip: paste your file into a JSON validator (or your editor) to catch a stray
+        comma before loading it. This tool is unofficial and not affiliated with the AAMC.</p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('copy-btn').addEventListener('click', function () {
+      var text = document.getElementById('example').textContent;
+      var done = function () { var b = document.getElementById('copy-btn'); b.textContent = 'Copied!'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done();
+      }
+    });
+  </script>
+</body>
+</html>
