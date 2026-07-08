@@ -708,41 +708,98 @@
     .intro-pane {
       flex: 1;
       overflow-y: auto;
-      background: var(--page-bg);
       display: flex;
       justify-content: center;
       align-items: flex-start;
       padding: 2.5rem 1.5rem;
+      /* subtle test-day dot grid */
+      background:
+        radial-gradient(circle at 1px 1px, rgba(15, 60, 100, 0.06) 1px, transparent 0) 0 0 / 22px 22px,
+        var(--page-bg);
     }
 
     .intro-card {
       background: var(--pane-bg);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      max-width: 780px;
+      border-radius: 10px;
+      max-width: 800px;
       width: 100%;
-      padding: 2.5rem;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      box-shadow: 0 10px 34px rgba(15, 40, 70, 0.13);
+      animation: introRise 0.5s ease both;
+    }
+
+    @keyframes introRise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* Faux exam-style hero strip */
+    .intro-hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #2b6296 0%, #163a5e 72%);
+      color: #fff;
+      padding: 2.15rem 2.5rem 1.9rem;
+    }
+
+    .intro-hero::after {
+      content: "";
+      position: absolute;
+      top: -45%;
+      right: -8%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .intro-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #d3e6f7;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 999px;
+      padding: 0.22rem 0.75rem;
+      margin-bottom: 1rem;
     }
 
     .intro-title {
-      color: var(--accent);
+      color: #fff;
       font-size: 2rem;
-      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.4rem;
+      cursor: default;
+      user-select: none;
     }
 
     .intro-tagline {
-      color: var(--text-muted);
-      font-size: 1.15rem;
+      color: #d6e4f1;
+      font-size: 1.1rem;
       line-height: 1.5;
-      margin-bottom: 1.75rem;
+      max-width: 40rem;
+      position: relative;
     }
+
+    .intro-body { padding: 1.75rem 2.5rem 1.5rem; }
 
     .intro-actions {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-cta {
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+    }
+
+    .intro-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(11, 92, 158, 0.38);
     }
 
     .btn-secondary {
@@ -754,33 +811,51 @@
       font-weight: bold;
       cursor: pointer;
       font-size: 0.9rem;
+      transition: background 0.15s ease;
     }
 
     .btn-secondary:hover { background: rgba(11, 92, 158, 0.08); }
 
     .intro-block {
       border-top: 1px solid var(--border-color);
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
+      padding-top: 1.4rem;
+      margin-top: 1.4rem;
     }
 
     .intro-block h2 {
-      font-size: 1.05rem;
-      margin-bottom: 0.6rem;
+      font-size: 1.02rem;
+      margin-bottom: 0.7rem;
       color: var(--text-main);
     }
 
-    .intro-block p,
-    .intro-block li { line-height: 1.6; color: var(--text-main); }
+    .intro-block > p { line-height: 1.6; color: var(--text-main); }
 
-    .intro-block ul {
-      padding-left: 1.2rem;
+    .intro-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.9rem;
     }
 
-    .intro-block kbd {
+    .intro-features li {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    .intro-features svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--accent);
+    }
+
+    .intro-features kbd {
       font-family: Arial, Helvetica, sans-serif;
       font-size: 0.78em;
       background: #eef1f4;
@@ -789,16 +864,64 @@
       padding: 0 4px;
     }
 
-    .intro-disclaimer {
-      margin-top: 1.75rem;
-      padding-top: 1.25rem;
+    .intro-foot {
       border-top: 1px solid var(--border-color);
-      font-size: 0.85rem;
-      line-height: 1.6;
+      margin-top: 1.5rem;
+      padding: 1.1rem 0 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
-    .intro-disclaimer a { color: var(--accent); }
+    .intro-sig a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .intro-sig a:hover { text-decoration: underline; }
+
+    /* Toast (used by easter eggs) */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 34px;
+      transform: translateX(-50%) translateY(18px);
+      background: #163a5e;
+      color: #fff;
+      padding: 0.7rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      z-index: 2100;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Confetti (easter egg) */
+    .confetti-piece {
+      position: fixed;
+      top: -12px;
+      width: 9px;
+      height: 15px;
+      z-index: 2000;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0%   { transform: translateY(-12px) rotateZ(0deg); opacity: 1; }
+      100% { transform: translateY(102vh) rotateZ(680deg); opacity: 0.85; }
+    }
 
     .discrete-note {
       color: var(--text-muted);
@@ -869,7 +992,7 @@
 <body>
   <!-- Top Header -->
   <header>
-    <div class="header-left" id="header-title">CARS Diagnostic Step 2 Practice Set</div>
+    <div class="header-left" id="header-title">MCAT Practice Viewer</div>
     <div class="header-right">
       <div class="timer-container">
         <div class="timer-item">
@@ -948,32 +1071,53 @@
     </div>
 
     <!-- Project intro / landing page -->
+    <!-- psst: try the Konami code (up up down down left right left right B A) or type 528 here. good luck! -- h0tp-ftw -->
     <div class="intro-pane" id="intro-pane">
       <div class="intro-card">
-        <h1 class="intro-title">MCAT-Style Practice Viewer</h1>
-        <p class="intro-tagline">A free, offline, test-day-style interface for reviewing multiple-choice practice questions — right in your browser.</p>
-
-        <div class="intro-actions">
-          <button class="btn-confirm" id="try-sample-btn">Try the sample questions &rarr;</button>
-          <button class="btn-secondary" id="load-own-btn">Load your own .json</button>
+        <div class="intro-hero">
+          <span class="intro-pill">Practice Section</span>
+          <h1 class="intro-title" id="intro-title">MCAT-Style Practice Viewer</h1>
+          <p class="intro-tagline">A free, offline, test-day-style interface for practice questions &mdash; right in your browser. No sign-up, no install, nothing to download.</p>
         </div>
 
-        <div class="intro-block">
-          <h2>What is this?</h2>
-          <p>An independent viewer that recreates the feel of a computer-based exam: split passage / question panes, a highlighter, answer elimination, a question navigator, a section timer, a built-in periodic table, and per-question explanations. Everything runs locally — nothing is uploaded, installed, or tracked.</p>
-        </div>
+        <div class="intro-body">
+          <div class="intro-actions">
+            <button class="btn-confirm intro-cta" id="try-sample-btn">Try the sample questions &rarr;</button>
+            <button class="btn-secondary" id="load-own-btn">Load your own .json</button>
+          </div>
 
-        <div class="intro-block">
-          <h2>How to use it</h2>
-          <ul>
-            <li><strong>Two modes</strong>, via the <em>Review Answer</em> switch in the top bar: <strong>Exam</strong> (change answers freely; results at the end) and <strong>Tutor</strong> (Confirm reveals the correct answer and explanation right away, then becomes Next).</li>
-            <li><strong>Annotate</strong> — highlight text (<kbd>Alt</kbd>+<kbd>H</kbd>), erase highlights (<kbd>Alt</kbd>+<kbd>E</kbd>), and click the <strong>&times;</strong> on a choice to strike it out.</li>
-            <li><strong>Move around</strong> — Previous / Next, flag for review (<kbd>Alt</kbd>+<kbd>F</kbd>), the navigator (<kbd>Alt</kbd>+<kbd>V</kbd>), and the periodic table (<kbd>Alt</kbd>+<kbd>T</kbd>). Pick answers with <kbd>A</kbd>–<kbd>D</kbd>.</li>
-            <li><strong>Your own content</strong> — drag a <code>.json</code> file anywhere onto the page, or use <em>Load JSON</em> in the top bar.</li>
-          </ul>
-        </div>
+          <div class="intro-block">
+            <h2>What is this?</h2>
+            <p>An independent viewer that recreates the feel of a computer-based exam: split passage / question panes, a highlighter, answer elimination, a question navigator, a section timer, a built-in periodic table, and per-question explanations. Everything runs locally &mdash; nothing is uploaded, installed, or tracked.</p>
+          </div>
 
-        <p class="intro-disclaimer">Unofficial &mdash; not affiliated with or endorsed by the AAMC. Ships with no exam content; the demo below is entirely original. <a href="https://github.com/h0tp-ftw/mcat-practice-viewer" target="_blank" rel="noopener">Source &amp; question format on GitHub &rarr;</a></p>
+          <div class="intro-block">
+            <h2>How to use it</h2>
+            <ul class="intro-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="6"></rect><circle cx="16" cy="12" r="3"></circle></svg>
+                <div><strong>Two modes</strong> &mdash; the <em>Review Answer</em> switch flips between <strong>Exam</strong> (change answers freely; results at the end) and <strong>Tutor</strong> (Confirm reveals the answer and explanation, then becomes Next).</div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path></svg>
+                <div><strong>Annotate</strong> &mdash; highlight text (<kbd>Alt</kbd>+<kbd>H</kbd>), erase highlights (<kbd>Alt</kbd>+<kbd>E</kbd>), and click the <strong>&times;</strong> on a choice to strike it out.</div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                <div><strong>Move around</strong> &mdash; Previous / Next, flag for review (<kbd>Alt</kbd>+<kbd>F</kbd>), the navigator (<kbd>Alt</kbd>+<kbd>V</kbd>), and pick answers with <kbd>A</kbd>&ndash;<kbd>D</kbd>.</div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <div><strong>Periodic table</strong> &mdash; a full built-in table (<kbd>Alt</kbd>+<kbd>T</kbd>), and you can drag a <code>.json</code> file anywhere onto the page to load your own set.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="intro-foot">
+            <span class="intro-note">Unofficial &middot; not affiliated with the AAMC &middot; ships with no exam content (the demo is original).</span>
+            <span class="intro-sig">Built by <a href="https://github.com/h0tp-ftw" target="_blank" rel="noopener">h0tp-ftw</a> &middot; <a href="https://github.com/h0tp-ftw/mcat-practice-viewer" target="_blank" rel="noopener">GitHub &#8599;</a></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1444,6 +1588,7 @@
       isReviewMode = true;
       reviewSwitch.checked = true;
       clearInterval(timerInterval);
+      showExamHeader(true);
       renderTimers();
       showQuestion(0);
     }
@@ -1457,6 +1602,7 @@
         subNavbar.style.display = 'none';
         footer.style.display = 'none';
         summaryPane.style.display = 'flex';
+        showExamHeader(false);
         return;
       }
       const unanswered = quizData.filter(q => !answeredQuestions[q.id]).length;
@@ -1470,9 +1616,15 @@
     });
 
     /* ---------- Loading data ---------- */
-    // On load, try your own local set first (content.json, git-ignored so it
-    // is never published), then fall back to the bundled sample. If neither
-    // is present, the "Load JSON" empty state is shown.
+    // Show/hide the exam-only header controls (timers, review toggle, End
+    // Section). They only make sense once a section is running.
+    function showExamHeader(show) {
+      const disp = show ? '' : 'none';
+      document.querySelector('.timer-container').style.display = disp;
+      document.querySelector('.review-toggle-container').style.display = disp;
+      document.getElementById('done-btn').style.display = disp;
+    }
+
     // On load, open your own local set (content.json, git-ignored) if present;
     // otherwise show the project intro, from which you can try the sample.
     window.addEventListener('DOMContentLoaded', () => {
@@ -1488,6 +1640,8 @@
       footer.style.display = 'none';
       summaryPane.style.display = 'none';
       introPane.style.display = 'flex';
+      headerTitle.innerText = 'MCAT Practice Viewer';
+      showExamHeader(false);
     }
 
     function loadSample() {
@@ -1565,6 +1719,7 @@
       viewerPane.style.display = 'flex';
       subNavbar.style.display = 'flex';
       footer.style.display = 'flex';
+      showExamHeader(true);
 
       startTimers();
       renderTimers();
@@ -1584,6 +1739,7 @@
       viewerPane.style.display = 'none';
       subNavbar.style.display = 'none';
       footer.style.display = 'none';
+      showExamHeader(false);
 
       summaryTitle.innerText = title;
       const mins = Math.round(computeAllotmentFor(title, quizData.length) / 60);
@@ -1918,6 +2074,75 @@
         else if (ptModal.style.display === 'flex') togglePeriodicTable();
       }
     });
+
+    /* ---------- Easter eggs (landing page only) ---------- */
+    (function easterEggs() {
+      try {
+        console.log('%cMCAT-Style Practice Viewer', 'font:600 16px Arial;color:#2b6296');
+        console.log('%cbuilt by h0tp-ftw — good luck on your MCAT! 🧬  (psst: try the Konami code on the landing page)', 'color:#5a6169');
+      } catch (e) {}
+
+      let toastEl = null, toastTimer = null;
+      function showToast(msg) {
+        if (!toastEl) {
+          toastEl = document.createElement('div');
+          toastEl.className = 'toast';
+          document.body.appendChild(toastEl);
+        }
+        toastEl.textContent = msg;
+        void toastEl.offsetWidth; // reflow so re-triggering re-animates
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+      }
+
+      function confetti() {
+        const colors = ['#2b6296', '#3fa34d', '#e6a52b', '#d64541', '#7fb8e8', '#ffffff'];
+        for (let i = 0; i < 90; i++) {
+          const p = document.createElement('div');
+          p.className = 'confetti-piece';
+          p.style.left = (Math.random() * 100) + 'vw';
+          p.style.background = colors[i % colors.length];
+          p.style.animationDuration = (1.6 + Math.random() * 1.8) + 's';
+          p.style.animationDelay = (Math.random() * 0.4) + 's';
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 4200);
+        }
+      }
+
+      function celebrate(msg) { confetti(); showToast(msg); }
+
+      // Key combos are handled only while the landing page is visible, so the
+      // quiz keyboard is never affected.
+      const onIntro = () => introPane.style.display !== 'none';
+      const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+      let kseq = [], typed = '';
+      window.addEventListener('keydown', (e) => {
+        if (!onIntro()) { kseq = []; typed = ''; return; }
+        const k = e.key.toLowerCase();
+        kseq.push(k);
+        if (kseq.length > konami.length) kseq.shift();
+        if (kseq.join(',') === konami.join(',')) { kseq = []; celebrate('528 unlocked — perfect-score energy ✨'); }
+        if (/^[0-9]$/.test(k)) {
+          typed = (typed + k).slice(-3);
+          if (typed === '528') { typed = ''; celebrate('528 club 🎯 — aim high!'); }
+        }
+      });
+
+      // Tap the title a few times for a little encouragement.
+      const messages = [
+        "You've got this. 💪",
+        "Trust your prep.",
+        "Read actively, answer decisively.",
+        "One passage at a time.",
+        "528 is just a lot of good decisions. 🎯",
+      ];
+      let taps = 0, mi = 0;
+      const titleEl = document.getElementById('intro-title');
+      if (titleEl) titleEl.addEventListener('click', () => {
+        if (++taps >= 3) { taps = 0; showToast(messages[mi++ % messages.length]); }
+      });
+    })();
   </script>
 </body>
 </html>
