@@ -3,60 +3,665 @@
     "id": 1001,
     "order": 1,
     "passage_id": 9001,
-    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>This is original, made-up sample content included to demonstrate the viewer. It contains no exam material of any kind.</p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
     "question_content": "<p>The author's central argument is that the public library:</p>",
     "answer_choices": [
-      { "id": 11, "sort_order": 0, "choice_content": "<p>should be replaced by digital services that deliver information more efficiently.</p>", "correct": false },
-      { "id": 12, "sort_order": 1, "choice_content": "<p>remains valuable primarily as a place to store and preserve printed books.</p>", "correct": false },
-      { "id": 13, "sort_order": 2, "choice_content": "<p>serves a civic purpose that its commercial and digital alternatives do not.</p>", "correct": true },
-      { "id": 14, "sort_order": 3, "choice_content": "<p>has already lost its relevance in communities with widespread internet access.</p>", "correct": false }
+      {
+        "id": 10001,
+        "sort_order": 0,
+        "choice_content": "<p>should be replaced by digital services that deliver information more efficiently.</p>",
+        "correct": false
+      },
+      {
+        "id": 10002,
+        "sort_order": 1,
+        "choice_content": "<p>remains valuable primarily as a place to store and preserve printed books.</p>",
+        "correct": false
+      },
+      {
+        "id": 10003,
+        "sort_order": 2,
+        "choice_content": "<p>serves a civic purpose that its commercial and digital alternatives do not.</p>",
+        "correct": true
+      },
+      {
+        "id": 10004,
+        "sort_order": 3,
+        "choice_content": "<p>has already lost its relevance in communities with widespread internet access.</p>",
+        "correct": false
+      }
     ],
     "correct_answer": "C",
-    "answer_content": "<p><strong>The solution is C.</strong></p><p>The passage repeatedly contrasts the library with the bookstore (\"customer\") and the platform (\"product\"), concluding that its value lies in offering access \"without being asked to buy anything.\" That is a civic purpose the alternatives do not share, making C the best fit. Choice A states the critics' view, which the author rejects. Choice B is too narrow — the author explicitly says a library \"was never merely a warehouse for books.\" Choice D contradicts the author's thesis.</p>"
+    "answer_content": "<p><strong>The solution is C.</strong> The passage contrasts the library with the bookstore (\"customer\") and the platform (\"product\"), locating its value in access offered \"without being asked to buy anything\" — a civic role the alternatives lack. A states the critics' view the author rejects; B is too narrow (\"never merely a warehouse for books\"); D contradicts the thesis.</p>"
   },
   {
     "id": 1002,
     "order": 2,
     "passage_id": 9001,
-    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>This is original, made-up sample content included to demonstrate the viewer. It contains no exam material of any kind.</p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
     "question_content": "<p>Which of the following, if true, would most <em>weaken</em> the author's argument in the third paragraph?</p>",
     "answer_choices": [
-      { "id": 21, "sort_order": 0, "choice_content": "<p>Libraries that eliminated their staff and quiet rooms saw sharp increases in community engagement and trust.</p>", "correct": true },
-      { "id": 22, "sort_order": 1, "choice_content": "<p>Most library patrons report that they visit chiefly to borrow physical books.</p>", "correct": false },
-      { "id": 23, "sort_order": 2, "choice_content": "<p>Some cities cannot afford to lend laptops or host expensive databases.</p>", "correct": false },
-      { "id": 24, "sort_order": 3, "choice_content": "<p>Commercial bookstores have begun offering free community events.</p>", "correct": false }
+      {
+        "id": 10005,
+        "sort_order": 0,
+        "choice_content": "<p>Libraries that eliminated their staff and quiet rooms saw sharp increases in community engagement and trust.</p>",
+        "correct": true
+      },
+      {
+        "id": 10006,
+        "sort_order": 1,
+        "choice_content": "<p>Most library patrons report that they visit chiefly to borrow physical books.</p>",
+        "correct": false
+      },
+      {
+        "id": 10007,
+        "sort_order": 2,
+        "choice_content": "<p>Some cities cannot afford to lend laptops or host expensive databases.</p>",
+        "correct": false
+      },
+      {
+        "id": 10008,
+        "sort_order": 3,
+        "choice_content": "<p>Commercial bookstores have begun offering free community events.</p>",
+        "correct": false
+      }
     ],
     "correct_answer": "A",
-    "answer_content": "<p><strong>The solution is A.</strong></p><p>In the third paragraph the author claims that a library stripped of its quiet rooms and human staff would lose \"the very thing that made it worth defending.\" Evidence that such stripped-down libraries actually became <em>more</em> engaging and trusted would directly undercut that claim, so A weakens the argument most. B and D concern other paragraphs, and C is consistent with (rather than damaging to) the author's view.</p>"
+    "answer_content": "<p><strong>The solution is A.</strong> The third paragraph claims a library stripped of its quiet rooms and staff would lose \"the very thing that made it worth defending.\" Evidence that such stripped-down libraries became <em>more</em> engaging and trusted directly undercuts that claim. B and D bear on other paragraphs; C is consistent with the author's view.</p>"
   },
   {
     "id": 1003,
     "order": 3,
     "passage_id": 9001,
-    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>This is original, made-up sample content included to demonstrate the viewer. It contains no exam material of any kind.</p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 1 (3 questions)</strong></p><p>Critics of the public library often argue that it is a relic of a pre-digital age. If information can be summoned from a phone in seconds, they ask, why should a city spend scarce funds maintaining buildings full of paper? The question sounds reasonable, but it rests on a narrow definition of what a library is for. A library was never merely a warehouse for books; it was, and remains, one of the few civic spaces a person may enter without being asked to buy anything.</p><p>That distinction matters more, not less, as commercial and digital life expand. The bookstore welcomes you as a customer; the platform welcomes you as a product, harvesting attention to sell elsewhere. The library, by contrast, extends the same access to a curious child, a job seeker printing a resume, and a retiree reading the morning paper. Its value is measured not in transactions but in the absence of them.</p><p>None of this implies that libraries should ignore technology. The most vital branches lend laptops, teach coding, and host databases no individual could afford. The point is subtler: the digital tools are means, while the civic promise is the end. A library that chased efficiency alone, stripping away its quiet rooms and its human staff, might survive as a server farm, but it would have surrendered the very thing that made it worth defending.</p></div>",
     "question_content": "<p>The author most likely mentions \"a curious child, a job seeker printing a resume, and a retiree reading the morning paper\" in order to:</p>",
     "answer_choices": [
-      { "id": 31, "sort_order": 0, "choice_content": "<p>illustrate the breadth of people to whom the library offers equal access.</p>", "correct": true },
-      { "id": 32, "sort_order": 1, "choice_content": "<p>argue that libraries should prioritize services for job seekers.</p>", "correct": false },
-      { "id": 33, "sort_order": 2, "choice_content": "<p>suggest that most library visitors are either very young or very old.</p>", "correct": false },
-      { "id": 34, "sort_order": 3, "choice_content": "<p>demonstrate that printed newspapers remain more popular than digital ones.</p>", "correct": false }
+      {
+        "id": 10009,
+        "sort_order": 0,
+        "choice_content": "<p>illustrate the breadth of people to whom the library offers equal access.</p>",
+        "correct": true
+      },
+      {
+        "id": 10010,
+        "sort_order": 1,
+        "choice_content": "<p>argue that libraries should prioritize services for job seekers.</p>",
+        "correct": false
+      },
+      {
+        "id": 10011,
+        "sort_order": 2,
+        "choice_content": "<p>suggest that most library visitors are either very young or very old.</p>",
+        "correct": false
+      },
+      {
+        "id": 10012,
+        "sort_order": 3,
+        "choice_content": "<p>demonstrate that printed newspapers remain more popular than digital ones.</p>",
+        "correct": false
+      }
     ],
     "correct_answer": "A",
-    "answer_content": "<p><strong>The solution is A.</strong></p><p>The list appears right after the claim that the library \"extends the same access\" to everyone, so its function is to dramatize that breadth of equal access. The other options over-read one item in the list (B, D) or draw a demographic conclusion the passage does not support (C).</p>"
+    "answer_content": "<p><strong>The solution is A.</strong> The list follows the claim that the library \"extends the same access\" to everyone; its function is to dramatize that breadth. The other choices over-read a single item (B, D) or draw an unsupported demographic conclusion (C).</p>"
   },
   {
     "id": 1004,
     "order": 4,
+    "passage_id": 9002,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 2 (5 questions)</strong></p><p>When a museum announces that it will clean a celebrated painting, the public reaction is rarely gratitude. More often it is unease, and sometimes open protest. The objection is seldom technical; few of the alarmed have any expertise in solvents or varnish. What they fear, rather, is a kind of loss that cannot easily be named — the disappearance of something that time itself had added.</p><p>That something is often called patina: the darkened varnish, the fine web of cracks, the muted surface that centuries deposit on a canvas. To the restorer, patina is mostly dirt and decayed varnish, an accretion that stands between the viewer and the artist's true colors. Remove it, and the painting is returned to what its maker saw. On this view, restoration is an act of recovery, even of justice: it undoes the accidents of history and lets the work speak in its original voice.</p><p>Yet the objectors are not simply sentimental. They sense that a painting is not only the object its maker completed but also the object that has survived, and that these are not the same thing. A canvas that has hung for four hundred years has acquired a history, and that history is legible on its surface. To strip it away in pursuit of an 'original' is to treat the intervening centuries as an error to be corrected rather than a fact to be honored. The cleaned painting may be brighter, but it is also, in a sense, younger than it has any right to be — a forgery of its own youth.</p><p>The dispute, then, is not really about dirt. It is about which object we take the artwork to be: the thing the artist made, or the thing that has come down to us. The restorer assumes the two can be prised apart, that beneath the residue of time lies a stable, recoverable original. The critic denies it, insisting that the work and its history have fused, so that to remove the one is to damage the other.</p><p>Neither position is wholly comfortable. Side entirely with the restorer, and we must accept that no state of the object is privileged — that a painting cleaned today might be cleaned differently tomorrow, each generation remaking the past in its own image. Side entirely with the critic, and we risk a paralysis that would let every work decay untouched, mistaking neglect for reverence. What the quarrel reveals is that even our most familiar objects are less settled than they appear. We speak of 'the painting' as though it were one fixed thing, when in fact it is a process — an object continuously remade by our decisions about how to keep it.</p></div>",
+    "question_content": "<p>The author's primary purpose is to:</p>",
+    "answer_choices": [
+      {
+        "id": 10013,
+        "sort_order": 0,
+        "choice_content": "<p>argue that museums should stop cleaning old paintings.</p>",
+        "correct": false
+      },
+      {
+        "id": 10014,
+        "sort_order": 1,
+        "choice_content": "<p>show that disputes over restoration reflect a deeper uncertainty about what an artwork is.</p>",
+        "correct": true
+      },
+      {
+        "id": 10015,
+        "sort_order": 2,
+        "choice_content": "<p>explain the chemical process by which patina forms on a canvas.</p>",
+        "correct": false
+      },
+      {
+        "id": 10016,
+        "sort_order": 3,
+        "choice_content": "<p>defend restorers against the charge that they damage paintings.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The essay uses the cleaning controversy to reach a broader claim — that \"the painting\" is not one fixed thing but a process, and the quarrel is really \"about which object we take the artwork to be.\" A and D each take one side, which the author explicitly declines to do (\"Neither position is wholly comfortable\"); C names a detail, not the purpose.</p>"
+  },
+  {
+    "id": 1005,
+    "order": 5,
+    "passage_id": 9002,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 2 (5 questions)</strong></p><p>When a museum announces that it will clean a celebrated painting, the public reaction is rarely gratitude. More often it is unease, and sometimes open protest. The objection is seldom technical; few of the alarmed have any expertise in solvents or varnish. What they fear, rather, is a kind of loss that cannot easily be named — the disappearance of something that time itself had added.</p><p>That something is often called patina: the darkened varnish, the fine web of cracks, the muted surface that centuries deposit on a canvas. To the restorer, patina is mostly dirt and decayed varnish, an accretion that stands between the viewer and the artist's true colors. Remove it, and the painting is returned to what its maker saw. On this view, restoration is an act of recovery, even of justice: it undoes the accidents of history and lets the work speak in its original voice.</p><p>Yet the objectors are not simply sentimental. They sense that a painting is not only the object its maker completed but also the object that has survived, and that these are not the same thing. A canvas that has hung for four hundred years has acquired a history, and that history is legible on its surface. To strip it away in pursuit of an 'original' is to treat the intervening centuries as an error to be corrected rather than a fact to be honored. The cleaned painting may be brighter, but it is also, in a sense, younger than it has any right to be — a forgery of its own youth.</p><p>The dispute, then, is not really about dirt. It is about which object we take the artwork to be: the thing the artist made, or the thing that has come down to us. The restorer assumes the two can be prised apart, that beneath the residue of time lies a stable, recoverable original. The critic denies it, insisting that the work and its history have fused, so that to remove the one is to damage the other.</p><p>Neither position is wholly comfortable. Side entirely with the restorer, and we must accept that no state of the object is privileged — that a painting cleaned today might be cleaned differently tomorrow, each generation remaking the past in its own image. Side entirely with the critic, and we risk a paralysis that would let every work decay untouched, mistaking neglect for reverence. What the quarrel reveals is that even our most familiar objects are less settled than they appear. We speak of 'the painting' as though it were one fixed thing, when in fact it is a process — an object continuously remade by our decisions about how to keep it.</p></div>",
+    "question_content": "<p>The author regards the people who object to cleaning as:</p>",
+    "answer_choices": [
+      {
+        "id": 10017,
+        "sort_order": 0,
+        "choice_content": "<p>technically informed but ultimately mistaken.</p>",
+        "correct": false
+      },
+      {
+        "id": 10018,
+        "sort_order": 1,
+        "choice_content": "<p>emotional, and therefore not worth serious consideration.</p>",
+        "correct": false
+      },
+      {
+        "id": 10019,
+        "sort_order": 2,
+        "choice_content": "<p>pointing to a genuine philosophical problem, even if they express it imperfectly.</p>",
+        "correct": true
+      },
+      {
+        "id": 10020,
+        "sort_order": 3,
+        "choice_content": "<p>holding a view identical to the restorer's.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "C",
+    "answer_content": "<p><strong>The solution is C.</strong> The author writes that the objectors are \"not simply sentimental\" and then reconstructs their concern as a serious claim about the identity of the artwork. B is the view the author rejects; A misstates their standing (they lack technical expertise, yet the author still credits them); D contradicts the passage, which opposes the two camps.</p>"
+  },
+  {
+    "id": 1006,
+    "order": 6,
+    "passage_id": 9002,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 2 (5 questions)</strong></p><p>When a museum announces that it will clean a celebrated painting, the public reaction is rarely gratitude. More often it is unease, and sometimes open protest. The objection is seldom technical; few of the alarmed have any expertise in solvents or varnish. What they fear, rather, is a kind of loss that cannot easily be named — the disappearance of something that time itself had added.</p><p>That something is often called patina: the darkened varnish, the fine web of cracks, the muted surface that centuries deposit on a canvas. To the restorer, patina is mostly dirt and decayed varnish, an accretion that stands between the viewer and the artist's true colors. Remove it, and the painting is returned to what its maker saw. On this view, restoration is an act of recovery, even of justice: it undoes the accidents of history and lets the work speak in its original voice.</p><p>Yet the objectors are not simply sentimental. They sense that a painting is not only the object its maker completed but also the object that has survived, and that these are not the same thing. A canvas that has hung for four hundred years has acquired a history, and that history is legible on its surface. To strip it away in pursuit of an 'original' is to treat the intervening centuries as an error to be corrected rather than a fact to be honored. The cleaned painting may be brighter, but it is also, in a sense, younger than it has any right to be — a forgery of its own youth.</p><p>The dispute, then, is not really about dirt. It is about which object we take the artwork to be: the thing the artist made, or the thing that has come down to us. The restorer assumes the two can be prised apart, that beneath the residue of time lies a stable, recoverable original. The critic denies it, insisting that the work and its history have fused, so that to remove the one is to damage the other.</p><p>Neither position is wholly comfortable. Side entirely with the restorer, and we must accept that no state of the object is privileged — that a painting cleaned today might be cleaned differently tomorrow, each generation remaking the past in its own image. Side entirely with the critic, and we risk a paralysis that would let every work decay untouched, mistaking neglect for reverence. What the quarrel reveals is that even our most familiar objects are less settled than they appear. We speak of 'the painting' as though it were one fixed thing, when in fact it is a process — an object continuously remade by our decisions about how to keep it.</p></div>",
+    "question_content": "<p>By calling a cleaned painting \"a forgery of its own youth,\" the author suggests that the painting:</p>",
+    "answer_choices": [
+      {
+        "id": 10021,
+        "sort_order": 0,
+        "choice_content": "<p>contains new paint secretly added by the restorer.</p>",
+        "correct": false
+      },
+      {
+        "id": 10022,
+        "sort_order": 1,
+        "choice_content": "<p>misrepresents itself as being in a state it can no longer authentically occupy.</p>",
+        "correct": true
+      },
+      {
+        "id": 10023,
+        "sort_order": 2,
+        "choice_content": "<p>was never actually made by the artist to whom it is attributed.</p>",
+        "correct": false
+      },
+      {
+        "id": 10024,
+        "sort_order": 3,
+        "choice_content": "<p>is worth less money than it was before cleaning.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> A forgery pretends to be something it is not; here the cleaned canvas is made to look newly finished, presenting a false version of its own past — it is \"younger than it has any right to be.\" A and C read \"forgery\" too literally; D introduces a monetary claim the passage never makes.</p>"
+  },
+  {
+    "id": 1007,
+    "order": 7,
+    "passage_id": 9002,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 2 (5 questions)</strong></p><p>When a museum announces that it will clean a celebrated painting, the public reaction is rarely gratitude. More often it is unease, and sometimes open protest. The objection is seldom technical; few of the alarmed have any expertise in solvents or varnish. What they fear, rather, is a kind of loss that cannot easily be named — the disappearance of something that time itself had added.</p><p>That something is often called patina: the darkened varnish, the fine web of cracks, the muted surface that centuries deposit on a canvas. To the restorer, patina is mostly dirt and decayed varnish, an accretion that stands between the viewer and the artist's true colors. Remove it, and the painting is returned to what its maker saw. On this view, restoration is an act of recovery, even of justice: it undoes the accidents of history and lets the work speak in its original voice.</p><p>Yet the objectors are not simply sentimental. They sense that a painting is not only the object its maker completed but also the object that has survived, and that these are not the same thing. A canvas that has hung for four hundred years has acquired a history, and that history is legible on its surface. To strip it away in pursuit of an 'original' is to treat the intervening centuries as an error to be corrected rather than a fact to be honored. The cleaned painting may be brighter, but it is also, in a sense, younger than it has any right to be — a forgery of its own youth.</p><p>The dispute, then, is not really about dirt. It is about which object we take the artwork to be: the thing the artist made, or the thing that has come down to us. The restorer assumes the two can be prised apart, that beneath the residue of time lies a stable, recoverable original. The critic denies it, insisting that the work and its history have fused, so that to remove the one is to damage the other.</p><p>Neither position is wholly comfortable. Side entirely with the restorer, and we must accept that no state of the object is privileged — that a painting cleaned today might be cleaned differently tomorrow, each generation remaking the past in its own image. Side entirely with the critic, and we risk a paralysis that would let every work decay untouched, mistaking neglect for reverence. What the quarrel reveals is that even our most familiar objects are less settled than they appear. We speak of 'the painting' as though it were one fixed thing, when in fact it is a process — an object continuously remade by our decisions about how to keep it.</p></div>",
+    "question_content": "<p>Which finding, if true, would most directly undermine the restorer's position as the author presents it?</p>",
+    "answer_choices": [
+      {
+        "id": 10025,
+        "sort_order": 0,
+        "choice_content": "<p>Given the same painting, different expert restorers reconstruct markedly different 'original' color schemes.</p>",
+        "correct": true
+      },
+      {
+        "id": 10026,
+        "sort_order": 1,
+        "choice_content": "<p>Most museum visitors say they prefer the appearance of paintings after cleaning.</p>",
+        "correct": false
+      },
+      {
+        "id": 10027,
+        "sort_order": 2,
+        "choice_content": "<p>Patina accumulates more quickly on paintings kept in humid rooms.</p>",
+        "correct": false
+      },
+      {
+        "id": 10028,
+        "sort_order": 3,
+        "choice_content": "<p>Cleaning a painting can be completed in far less time than it once required.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "A",
+    "answer_content": "<p><strong>The solution is A.</strong> The restorer's position rests on the premise that \"beneath the residue of time lies a stable, recoverable original.\" If experts recover different originals from the same canvas, that stable, recoverable original does not exist, and the premise fails. B concerns preference, not recoverability; C and D are irrelevant to the philosophical claim.</p>"
+  },
+  {
+    "id": 1008,
+    "order": 8,
+    "passage_id": 9002,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 2 (5 questions)</strong></p><p>When a museum announces that it will clean a celebrated painting, the public reaction is rarely gratitude. More often it is unease, and sometimes open protest. The objection is seldom technical; few of the alarmed have any expertise in solvents or varnish. What they fear, rather, is a kind of loss that cannot easily be named — the disappearance of something that time itself had added.</p><p>That something is often called patina: the darkened varnish, the fine web of cracks, the muted surface that centuries deposit on a canvas. To the restorer, patina is mostly dirt and decayed varnish, an accretion that stands between the viewer and the artist's true colors. Remove it, and the painting is returned to what its maker saw. On this view, restoration is an act of recovery, even of justice: it undoes the accidents of history and lets the work speak in its original voice.</p><p>Yet the objectors are not simply sentimental. They sense that a painting is not only the object its maker completed but also the object that has survived, and that these are not the same thing. A canvas that has hung for four hundred years has acquired a history, and that history is legible on its surface. To strip it away in pursuit of an 'original' is to treat the intervening centuries as an error to be corrected rather than a fact to be honored. The cleaned painting may be brighter, but it is also, in a sense, younger than it has any right to be — a forgery of its own youth.</p><p>The dispute, then, is not really about dirt. It is about which object we take the artwork to be: the thing the artist made, or the thing that has come down to us. The restorer assumes the two can be prised apart, that beneath the residue of time lies a stable, recoverable original. The critic denies it, insisting that the work and its history have fused, so that to remove the one is to damage the other.</p><p>Neither position is wholly comfortable. Side entirely with the restorer, and we must accept that no state of the object is privileged — that a painting cleaned today might be cleaned differently tomorrow, each generation remaking the past in its own image. Side entirely with the critic, and we risk a paralysis that would let every work decay untouched, mistaking neglect for reverence. What the quarrel reveals is that even our most familiar objects are less settled than they appear. We speak of 'the painting' as though it were one fixed thing, when in fact it is a process — an object continuously remade by our decisions about how to keep it.</p></div>",
+    "question_content": "<p>The author's description of 'the painting' as \"a process ... continuously remade by our decisions\" is most analogous to:</p>",
+    "answer_choices": [
+      {
+        "id": 10029,
+        "sort_order": 0,
+        "choice_content": "<p>a river that is never the same water twice, yet is still called the same river.</p>",
+        "correct": true
+      },
+      {
+        "id": 10030,
+        "sort_order": 1,
+        "choice_content": "<p>a blueprint from which many identical houses can be built.</p>",
+        "correct": false
+      },
+      {
+        "id": 10031,
+        "sort_order": 2,
+        "choice_content": "<p>a photograph that fixes a single moment in time.</p>",
+        "correct": false
+      },
+      {
+        "id": 10032,
+        "sort_order": 3,
+        "choice_content": "<p>a mathematical proof that is either valid or invalid.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "A",
+    "answer_content": "<p><strong>The solution is A.</strong> The author's point is that the artwork's identity persists through continual change driven by our choices — exactly the river's paradox of sameness-through-flux. B implies a fixed template with interchangeable copies; C and D imply a single fixed or determinate state, the opposite of a 'process.'</p>"
+  },
+  {
+    "id": 1009,
+    "order": 9,
+    "passage_id": 9003,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 3 (5 questions)</strong></p><p>There is a persistent hope, older than the internet but greatly amplified by it, that large groups of ordinary people can, in aggregate, know more than any expert among them. The classic demonstration is a country fair at which hundreds of visitors guess the weight of an ox; no single guess is exact, but their average, famously, lands within a pound of the truth. From such episodes a general principle is often drawn: that the many, pooled, are wiser than the few.</p><p>The principle is real, but far more fragile than its enthusiasts allow. The ox-guessers succeed under conditions that are easy to state and hard to meet. Their errors must be roughly independent, so that one person's overestimate can cancel another's underestimate. Their guesses must be diverse, drawing on different scraps of knowledge rather than the same rumor. And each must decide privately, uninfluenced by what the others say. When these conditions hold, aggregation performs a small miracle, converting scattered ignorance into collective accuracy.</p><p>Remove any one of them, and the miracle fails. Let the guessers hear one another, and independence collapses: a few confident voices set an anchor, and the crowd drifts toward it, its errors no longer canceling but compounding. Let them share a common bias — a systematic tendency to guess high, say — and no amount of averaging will remove what every member brought in common. The crowd is not wise in itself; it is wise only when its members are wrong in different directions.</p><p>This is why the analogy among markets, juries, and online ratings must be handled with care. Each can aggregate dispersed judgment, but each is also exquisitely vulnerable to the herding that destroys it. A stock price can reflect the collective assessment of thousands, or it can reflect thousands copying one another into a bubble. The difference lies not in the number of participants but in whether they are thinking independently or merely watching the same screen.</p><p>The expert, meanwhile, is not thereby vindicated. A single specialist may command deep knowledge and still be captured by the blind spots of her training — blind spots she shares with every colleague who learned as she did. Expertise is a kind of correlated judgment: powerful within its domain, dangerous when the domain's own assumptions are what is in question. The crowd's strength is its diversity; the expert's weakness is its uniformity. The sensible conclusion is neither populist nor deferential: aggregated and expert judgment are tools with opposite failure modes, and the task is to know which failure one is courting.</p></div>",
+    "question_content": "<p>The passage's central claim is that:</p>",
+    "answer_choices": [
+      {
+        "id": 10033,
+        "sort_order": 0,
+        "choice_content": "<p>crowds are, as a rule, wiser than any expert.</p>",
+        "correct": false
+      },
+      {
+        "id": 10034,
+        "sort_order": 1,
+        "choice_content": "<p>the accuracy of aggregated judgment depends on conditions that are frequently absent.</p>",
+        "correct": true
+      },
+      {
+        "id": 10035,
+        "sort_order": 2,
+        "choice_content": "<p>experts should defer to public opinion on most questions.</p>",
+        "correct": false
+      },
+      {
+        "id": 10036,
+        "sort_order": 3,
+        "choice_content": "<p>markets are the most reliable form of collective judgment.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> After granting that crowd wisdom is \"real,\" the author spends the passage specifying the fragile conditions — independence, diversity, privacy — on which it depends and showing how easily they fail. A overstates the claim the author qualifies; C and D are positions the author explicitly resists.</p>"
+  },
+  {
+    "id": 1010,
+    "order": 10,
+    "passage_id": 9003,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 3 (5 questions)</strong></p><p>There is a persistent hope, older than the internet but greatly amplified by it, that large groups of ordinary people can, in aggregate, know more than any expert among them. The classic demonstration is a country fair at which hundreds of visitors guess the weight of an ox; no single guess is exact, but their average, famously, lands within a pound of the truth. From such episodes a general principle is often drawn: that the many, pooled, are wiser than the few.</p><p>The principle is real, but far more fragile than its enthusiasts allow. The ox-guessers succeed under conditions that are easy to state and hard to meet. Their errors must be roughly independent, so that one person's overestimate can cancel another's underestimate. Their guesses must be diverse, drawing on different scraps of knowledge rather than the same rumor. And each must decide privately, uninfluenced by what the others say. When these conditions hold, aggregation performs a small miracle, converting scattered ignorance into collective accuracy.</p><p>Remove any one of them, and the miracle fails. Let the guessers hear one another, and independence collapses: a few confident voices set an anchor, and the crowd drifts toward it, its errors no longer canceling but compounding. Let them share a common bias — a systematic tendency to guess high, say — and no amount of averaging will remove what every member brought in common. The crowd is not wise in itself; it is wise only when its members are wrong in different directions.</p><p>This is why the analogy among markets, juries, and online ratings must be handled with care. Each can aggregate dispersed judgment, but each is also exquisitely vulnerable to the herding that destroys it. A stock price can reflect the collective assessment of thousands, or it can reflect thousands copying one another into a bubble. The difference lies not in the number of participants but in whether they are thinking independently or merely watching the same screen.</p><p>The expert, meanwhile, is not thereby vindicated. A single specialist may command deep knowledge and still be captured by the blind spots of her training — blind spots she shares with every colleague who learned as she did. Expertise is a kind of correlated judgment: powerful within its domain, dangerous when the domain's own assumptions are what is in question. The crowd's strength is its diversity; the expert's weakness is its uniformity. The sensible conclusion is neither populist nor deferential: aggregated and expert judgment are tools with opposite failure modes, and the task is to know which failure one is courting.</p></div>",
+    "question_content": "<p>According to the passage, averaging many guesses fails to improve accuracy when:</p>",
+    "answer_choices": [
+      {
+        "id": 10037,
+        "sort_order": 0,
+        "choice_content": "<p>the group is unusually large.</p>",
+        "correct": false
+      },
+      {
+        "id": 10038,
+        "sort_order": 1,
+        "choice_content": "<p>the guessers share a common, systematic bias.</p>",
+        "correct": true
+      },
+      {
+        "id": 10039,
+        "sort_order": 2,
+        "choice_content": "<p>no expert is present to guide the group.</p>",
+        "correct": false
+      },
+      {
+        "id": 10040,
+        "sort_order": 3,
+        "choice_content": "<p>the quantity being estimated is hard to measure.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The passage states that a shared bias — \"a systematic tendency to guess high\" — cannot be averaged away, since \"no amount of averaging will remove what every member brought in common.\" Size (A) is not the operative variable; the passage ties failure to lost independence/diversity, not the absence of an expert (C) or measurement difficulty (D).</p>"
+  },
+  {
+    "id": 1011,
+    "order": 11,
+    "passage_id": 9003,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 3 (5 questions)</strong></p><p>There is a persistent hope, older than the internet but greatly amplified by it, that large groups of ordinary people can, in aggregate, know more than any expert among them. The classic demonstration is a country fair at which hundreds of visitors guess the weight of an ox; no single guess is exact, but their average, famously, lands within a pound of the truth. From such episodes a general principle is often drawn: that the many, pooled, are wiser than the few.</p><p>The principle is real, but far more fragile than its enthusiasts allow. The ox-guessers succeed under conditions that are easy to state and hard to meet. Their errors must be roughly independent, so that one person's overestimate can cancel another's underestimate. Their guesses must be diverse, drawing on different scraps of knowledge rather than the same rumor. And each must decide privately, uninfluenced by what the others say. When these conditions hold, aggregation performs a small miracle, converting scattered ignorance into collective accuracy.</p><p>Remove any one of them, and the miracle fails. Let the guessers hear one another, and independence collapses: a few confident voices set an anchor, and the crowd drifts toward it, its errors no longer canceling but compounding. Let them share a common bias — a systematic tendency to guess high, say — and no amount of averaging will remove what every member brought in common. The crowd is not wise in itself; it is wise only when its members are wrong in different directions.</p><p>This is why the analogy among markets, juries, and online ratings must be handled with care. Each can aggregate dispersed judgment, but each is also exquisitely vulnerable to the herding that destroys it. A stock price can reflect the collective assessment of thousands, or it can reflect thousands copying one another into a bubble. The difference lies not in the number of participants but in whether they are thinking independently or merely watching the same screen.</p><p>The expert, meanwhile, is not thereby vindicated. A single specialist may command deep knowledge and still be captured by the blind spots of her training — blind spots she shares with every colleague who learned as she did. Expertise is a kind of correlated judgment: powerful within its domain, dangerous when the domain's own assumptions are what is in question. The crowd's strength is its diversity; the expert's weakness is its uniformity. The sensible conclusion is neither populist nor deferential: aggregated and expert judgment are tools with opposite failure modes, and the task is to know which failure one is courting.</p></div>",
+    "question_content": "<p>The statement that the crowd \"is wise only when its members are wrong in different directions\" most directly implies that:</p>",
+    "answer_choices": [
+      {
+        "id": 10041,
+        "sort_order": 0,
+        "choice_content": "<p>a crowd should include as many members as possible.</p>",
+        "correct": false
+      },
+      {
+        "id": 10042,
+        "sort_order": 1,
+        "choice_content": "<p>the value of aggregation comes from the cancellation of independent errors.</p>",
+        "correct": true
+      },
+      {
+        "id": 10043,
+        "sort_order": 2,
+        "choice_content": "<p>individual accuracy matters more than the size of the group.</p>",
+        "correct": false
+      },
+      {
+        "id": 10044,
+        "sort_order": 3,
+        "choice_content": "<p>disagreement within a group is a sign of collective ignorance.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> \"Wrong in different directions\" describes errors that offset one another — the cancellation mechanism the passage credits for turning \"scattered ignorance into collective accuracy.\" A fixates on size, which the passage downplays; C and D contradict the passage's praise of diverse, offsetting error.</p>"
+  },
+  {
+    "id": 1012,
+    "order": 12,
+    "passage_id": 9003,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 3 (5 questions)</strong></p><p>There is a persistent hope, older than the internet but greatly amplified by it, that large groups of ordinary people can, in aggregate, know more than any expert among them. The classic demonstration is a country fair at which hundreds of visitors guess the weight of an ox; no single guess is exact, but their average, famously, lands within a pound of the truth. From such episodes a general principle is often drawn: that the many, pooled, are wiser than the few.</p><p>The principle is real, but far more fragile than its enthusiasts allow. The ox-guessers succeed under conditions that are easy to state and hard to meet. Their errors must be roughly independent, so that one person's overestimate can cancel another's underestimate. Their guesses must be diverse, drawing on different scraps of knowledge rather than the same rumor. And each must decide privately, uninfluenced by what the others say. When these conditions hold, aggregation performs a small miracle, converting scattered ignorance into collective accuracy.</p><p>Remove any one of them, and the miracle fails. Let the guessers hear one another, and independence collapses: a few confident voices set an anchor, and the crowd drifts toward it, its errors no longer canceling but compounding. Let them share a common bias — a systematic tendency to guess high, say — and no amount of averaging will remove what every member brought in common. The crowd is not wise in itself; it is wise only when its members are wrong in different directions.</p><p>This is why the analogy among markets, juries, and online ratings must be handled with care. Each can aggregate dispersed judgment, but each is also exquisitely vulnerable to the herding that destroys it. A stock price can reflect the collective assessment of thousands, or it can reflect thousands copying one another into a bubble. The difference lies not in the number of participants but in whether they are thinking independently or merely watching the same screen.</p><p>The expert, meanwhile, is not thereby vindicated. A single specialist may command deep knowledge and still be captured by the blind spots of her training — blind spots she shares with every colleague who learned as she did. Expertise is a kind of correlated judgment: powerful within its domain, dangerous when the domain's own assumptions are what is in question. The crowd's strength is its diversity; the expert's weakness is its uniformity. The sensible conclusion is neither populist nor deferential: aggregated and expert judgment are tools with opposite failure modes, and the task is to know which failure one is courting.</p></div>",
+    "question_content": "<p>The author's attitude toward expert judgment is best described as:</p>",
+    "answer_choices": [
+      {
+        "id": 10045,
+        "sort_order": 0,
+        "choice_content": "<p>dismissive — an expert is no better than a herded crowd.</p>",
+        "correct": false
+      },
+      {
+        "id": 10046,
+        "sort_order": 1,
+        "choice_content": "<p>reverential — expertise reliably corrects the errors of crowds.</p>",
+        "correct": false
+      },
+      {
+        "id": 10047,
+        "sort_order": 2,
+        "choice_content": "<p>qualified — expertise is powerful within its domain but blind to its shared assumptions.</p>",
+        "correct": true
+      },
+      {
+        "id": 10048,
+        "sort_order": 3,
+        "choice_content": "<p>indifferent — the passage takes no position on experts.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "C",
+    "answer_content": "<p><strong>The solution is C.</strong> The final paragraph calls expertise \"powerful within its domain, dangerous when the domain's own assumptions are what is in question.\" That is a qualified assessment, not blanket dismissal (A), reverence (B), or indifference (D).</p>"
+  },
+  {
+    "id": 1013,
+    "order": 13,
+    "passage_id": 9003,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 3 (5 questions)</strong></p><p>There is a persistent hope, older than the internet but greatly amplified by it, that large groups of ordinary people can, in aggregate, know more than any expert among them. The classic demonstration is a country fair at which hundreds of visitors guess the weight of an ox; no single guess is exact, but their average, famously, lands within a pound of the truth. From such episodes a general principle is often drawn: that the many, pooled, are wiser than the few.</p><p>The principle is real, but far more fragile than its enthusiasts allow. The ox-guessers succeed under conditions that are easy to state and hard to meet. Their errors must be roughly independent, so that one person's overestimate can cancel another's underestimate. Their guesses must be diverse, drawing on different scraps of knowledge rather than the same rumor. And each must decide privately, uninfluenced by what the others say. When these conditions hold, aggregation performs a small miracle, converting scattered ignorance into collective accuracy.</p><p>Remove any one of them, and the miracle fails. Let the guessers hear one another, and independence collapses: a few confident voices set an anchor, and the crowd drifts toward it, its errors no longer canceling but compounding. Let them share a common bias — a systematic tendency to guess high, say — and no amount of averaging will remove what every member brought in common. The crowd is not wise in itself; it is wise only when its members are wrong in different directions.</p><p>This is why the analogy among markets, juries, and online ratings must be handled with care. Each can aggregate dispersed judgment, but each is also exquisitely vulnerable to the herding that destroys it. A stock price can reflect the collective assessment of thousands, or it can reflect thousands copying one another into a bubble. The difference lies not in the number of participants but in whether they are thinking independently or merely watching the same screen.</p><p>The expert, meanwhile, is not thereby vindicated. A single specialist may command deep knowledge and still be captured by the blind spots of her training — blind spots she shares with every colleague who learned as she did. Expertise is a kind of correlated judgment: powerful within its domain, dangerous when the domain's own assumptions are what is in question. The crowd's strength is its diversity; the expert's weakness is its uniformity. The sensible conclusion is neither populist nor deferential: aggregated and expert judgment are tools with opposite failure modes, and the task is to know which failure one is courting.</p></div>",
+    "question_content": "<p>Which situation would the author most likely accept as a genuine instance of crowd wisdom rather than a failure of it?</p>",
+    "answer_choices": [
+      {
+        "id": 10049,
+        "sort_order": 0,
+        "choice_content": "<p>Investors buying a stock mainly because its price is rapidly rising.</p>",
+        "correct": false
+      },
+      {
+        "id": 10050,
+        "sort_order": 1,
+        "choice_content": "<p>A jury that discusses the evidence together until it reaches a unanimous verdict.</p>",
+        "correct": false
+      },
+      {
+        "id": 10051,
+        "sort_order": 2,
+        "choice_content": "<p>Thousands of forecasters privately estimating a harvest, whose estimates are then averaged.</p>",
+        "correct": true
+      },
+      {
+        "id": 10052,
+        "sort_order": 3,
+        "choice_content": "<p>Online reviewers who read the existing reviews before posting their own ratings.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "C",
+    "answer_content": "<p><strong>The solution is C.</strong> Only C preserves the independence and privacy the author requires (\"each must decide privately\"). A (herding into a bubble), B (conferring destroys independence), and D (reading others first) are precisely the conditions the passage says defeat aggregation.</p>"
+  },
+  {
+    "id": 1014,
+    "order": 14,
+    "passage_id": 9004,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 4 (5 questions)</strong></p><p>We are taught to think of a map as a picture of the world — more or less faithful, more or less detailed, but essentially a copy. The better the map, on this view, the more nearly it approaches the territory it depicts, until in the limit it would be a perfect miniature of the land itself. It is a comforting idea, and almost entirely wrong.</p><p>A map is not a copy of the world but an argument about it. Every map begins with subtraction: the cartographer must discard almost everything — the smell of the harbor, the noise of the street, the countless features too small or too transient to draw — and keep only what serves a purpose. What survives that discarding is never neutral. A road map erases the forest; a political map erases the road; a map of dialects erases both, and draws instead invisible boundaries no traveler could ever see. To make a map is to decide what is worth showing, and every such decision is a claim about what matters.</p><p>Consider the familiar wall map on which Greenland looms as large as Africa, though the continent is many times the island's size. The distortion is not a flaw to be apologized for but the price of a particular virtue: the projection preserves the angles a navigator needs to hold a compass course, and pays for that convenience in area. There is no map that lies about nothing, because there is no way to flatten a sphere without tearing it somewhere. Every projection tells the truth about certain relationships by lying about others, and the mapmaker's real choice is not whether to distort but which distortions to accept.</p><p>Once this is seen, the map's authority becomes harder to take for granted. The lines that look like simple observation — this nation ends here, this frontier is 'natural' — are assertions dressed as descriptions, and they shape how their readers imagine the world. A boundary drawn firmly on paper can come to seem inevitable, even where the ground beneath it is contested or the people it divides feel no division at all. The map does not merely record such facts; it helps to manufacture them, teaching generations to see as given what was in truth chosen.</p><p>None of this makes maps dishonest, any more than a sentence is dishonest for selecting some words and omitting others. It makes them rhetorical. A map persuades precisely by concealing that it is persuading, presenting a set of choices with the calm face of fact. To read a map well, then, is not to ask only where things are, but to ask what the map wants — what it includes, what it suppresses, and whose purposes its silent decisions serve.</p></div>",
+    "question_content": "<p>The central claim of the passage is that maps:</p>",
+    "answer_choices": [
+      {
+        "id": 10053,
+        "sort_order": 0,
+        "choice_content": "<p>should strive to become ever more detailed copies of the world.</p>",
+        "correct": false
+      },
+      {
+        "id": 10054,
+        "sort_order": 1,
+        "choice_content": "<p>are selective, purpose-driven arguments rather than neutral copies.</p>",
+        "correct": true
+      },
+      {
+        "id": 10055,
+        "sort_order": 2,
+        "choice_content": "<p>are inevitably dishonest and ought to be distrusted.</p>",
+        "correct": false
+      },
+      {
+        "id": 10056,
+        "sort_order": 3,
+        "choice_content": "<p>are most useful when they preserve accurate areas.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The thesis is stated directly: \"A map is not a copy of the world but an argument about it,\" built from purposeful selection. A is the \"comforting idea\" the author rejects; C overshoots (the author insists maps are \"not dishonest\"); D contradicts the Greenland example, which defends sacrificing area.</p>"
+  },
+  {
+    "id": 1015,
+    "order": 15,
+    "passage_id": 9004,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 4 (5 questions)</strong></p><p>We are taught to think of a map as a picture of the world — more or less faithful, more or less detailed, but essentially a copy. The better the map, on this view, the more nearly it approaches the territory it depicts, until in the limit it would be a perfect miniature of the land itself. It is a comforting idea, and almost entirely wrong.</p><p>A map is not a copy of the world but an argument about it. Every map begins with subtraction: the cartographer must discard almost everything — the smell of the harbor, the noise of the street, the countless features too small or too transient to draw — and keep only what serves a purpose. What survives that discarding is never neutral. A road map erases the forest; a political map erases the road; a map of dialects erases both, and draws instead invisible boundaries no traveler could ever see. To make a map is to decide what is worth showing, and every such decision is a claim about what matters.</p><p>Consider the familiar wall map on which Greenland looms as large as Africa, though the continent is many times the island's size. The distortion is not a flaw to be apologized for but the price of a particular virtue: the projection preserves the angles a navigator needs to hold a compass course, and pays for that convenience in area. There is no map that lies about nothing, because there is no way to flatten a sphere without tearing it somewhere. Every projection tells the truth about certain relationships by lying about others, and the mapmaker's real choice is not whether to distort but which distortions to accept.</p><p>Once this is seen, the map's authority becomes harder to take for granted. The lines that look like simple observation — this nation ends here, this frontier is 'natural' — are assertions dressed as descriptions, and they shape how their readers imagine the world. A boundary drawn firmly on paper can come to seem inevitable, even where the ground beneath it is contested or the people it divides feel no division at all. The map does not merely record such facts; it helps to manufacture them, teaching generations to see as given what was in truth chosen.</p><p>None of this makes maps dishonest, any more than a sentence is dishonest for selecting some words and omitting others. It makes them rhetorical. A map persuades precisely by concealing that it is persuading, presenting a set of choices with the calm face of fact. To read a map well, then, is not to ask only where things are, but to ask what the map wants — what it includes, what it suppresses, and whose purposes its silent decisions serve.</p></div>",
+    "question_content": "<p>The author discusses the wall map on which Greenland appears as large as Africa mainly to show that:</p>",
+    "answer_choices": [
+      {
+        "id": 10057,
+        "sort_order": 0,
+        "choice_content": "<p>mapmakers are frequently careless about matters of scale.</p>",
+        "correct": false
+      },
+      {
+        "id": 10058,
+        "sort_order": 1,
+        "choice_content": "<p>some distortion is an unavoidable trade-off rather than a mistake.</p>",
+        "correct": true
+      },
+      {
+        "id": 10059,
+        "sort_order": 2,
+        "choice_content": "<p>navigators no longer have any need for printed maps.</p>",
+        "correct": false
+      },
+      {
+        "id": 10060,
+        "sort_order": 3,
+        "choice_content": "<p>political maps are more accurate than physical maps.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The distortion is \"not a flaw to be apologized for but the price of a particular virtue\" — preserved angles at the cost of area — illustrating that \"there is no way to flatten a sphere without tearing it somewhere.\" A misreads deliberate trade-off as carelessness; C and D are never claimed.</p>"
+  },
+  {
+    "id": 1016,
+    "order": 16,
+    "passage_id": 9004,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 4 (5 questions)</strong></p><p>We are taught to think of a map as a picture of the world — more or less faithful, more or less detailed, but essentially a copy. The better the map, on this view, the more nearly it approaches the territory it depicts, until in the limit it would be a perfect miniature of the land itself. It is a comforting idea, and almost entirely wrong.</p><p>A map is not a copy of the world but an argument about it. Every map begins with subtraction: the cartographer must discard almost everything — the smell of the harbor, the noise of the street, the countless features too small or too transient to draw — and keep only what serves a purpose. What survives that discarding is never neutral. A road map erases the forest; a political map erases the road; a map of dialects erases both, and draws instead invisible boundaries no traveler could ever see. To make a map is to decide what is worth showing, and every such decision is a claim about what matters.</p><p>Consider the familiar wall map on which Greenland looms as large as Africa, though the continent is many times the island's size. The distortion is not a flaw to be apologized for but the price of a particular virtue: the projection preserves the angles a navigator needs to hold a compass course, and pays for that convenience in area. There is no map that lies about nothing, because there is no way to flatten a sphere without tearing it somewhere. Every projection tells the truth about certain relationships by lying about others, and the mapmaker's real choice is not whether to distort but which distortions to accept.</p><p>Once this is seen, the map's authority becomes harder to take for granted. The lines that look like simple observation — this nation ends here, this frontier is 'natural' — are assertions dressed as descriptions, and they shape how their readers imagine the world. A boundary drawn firmly on paper can come to seem inevitable, even where the ground beneath it is contested or the people it divides feel no division at all. The map does not merely record such facts; it helps to manufacture them, teaching generations to see as given what was in truth chosen.</p><p>None of this makes maps dishonest, any more than a sentence is dishonest for selecting some words and omitting others. It makes them rhetorical. A map persuades precisely by concealing that it is persuading, presenting a set of choices with the calm face of fact. To read a map well, then, is not to ask only where things are, but to ask what the map wants — what it includes, what it suppresses, and whose purposes its silent decisions serve.</p></div>",
+    "question_content": "<p>By describing certain lines on maps as \"assertions dressed as descriptions,\" the author means that they:</p>",
+    "answer_choices": [
+      {
+        "id": 10061,
+        "sort_order": 0,
+        "choice_content": "<p>are drawn with heavier ink than surrounding features.</p>",
+        "correct": false
+      },
+      {
+        "id": 10062,
+        "sort_order": 1,
+        "choice_content": "<p>present chosen, contestable claims as though they were plain observations.</p>",
+        "correct": true
+      },
+      {
+        "id": 10063,
+        "sort_order": 2,
+        "choice_content": "<p>record real borders that every observer can see on the ground.</p>",
+        "correct": false
+      },
+      {
+        "id": 10064,
+        "sort_order": 3,
+        "choice_content": "<p>are added to maps only by dishonest cartographers.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The phrase names claims (assertions) disguised as neutral fact (descriptions) — borders that \"look like simple observation\" but are contestable and chosen. A is literal-minded; C is the illusion the author is puncturing; D contradicts \"None of this makes maps dishonest.\"</p>"
+  },
+  {
+    "id": 1017,
+    "order": 17,
+    "passage_id": 9004,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 4 (5 questions)</strong></p><p>We are taught to think of a map as a picture of the world — more or less faithful, more or less detailed, but essentially a copy. The better the map, on this view, the more nearly it approaches the territory it depicts, until in the limit it would be a perfect miniature of the land itself. It is a comforting idea, and almost entirely wrong.</p><p>A map is not a copy of the world but an argument about it. Every map begins with subtraction: the cartographer must discard almost everything — the smell of the harbor, the noise of the street, the countless features too small or too transient to draw — and keep only what serves a purpose. What survives that discarding is never neutral. A road map erases the forest; a political map erases the road; a map of dialects erases both, and draws instead invisible boundaries no traveler could ever see. To make a map is to decide what is worth showing, and every such decision is a claim about what matters.</p><p>Consider the familiar wall map on which Greenland looms as large as Africa, though the continent is many times the island's size. The distortion is not a flaw to be apologized for but the price of a particular virtue: the projection preserves the angles a navigator needs to hold a compass course, and pays for that convenience in area. There is no map that lies about nothing, because there is no way to flatten a sphere without tearing it somewhere. Every projection tells the truth about certain relationships by lying about others, and the mapmaker's real choice is not whether to distort but which distortions to accept.</p><p>Once this is seen, the map's authority becomes harder to take for granted. The lines that look like simple observation — this nation ends here, this frontier is 'natural' — are assertions dressed as descriptions, and they shape how their readers imagine the world. A boundary drawn firmly on paper can come to seem inevitable, even where the ground beneath it is contested or the people it divides feel no division at all. The map does not merely record such facts; it helps to manufacture them, teaching generations to see as given what was in truth chosen.</p><p>None of this makes maps dishonest, any more than a sentence is dishonest for selecting some words and omitting others. It makes them rhetorical. A map persuades precisely by concealing that it is persuading, presenting a set of choices with the calm face of fact. To read a map well, then, is not to ask only where things are, but to ask what the map wants — what it includes, what it suppresses, and whose purposes its silent decisions serve.</p></div>",
+    "question_content": "<p>The author compares a map to a sentence primarily in order to:</p>",
+    "answer_choices": [
+      {
+        "id": 10065,
+        "sort_order": 0,
+        "choice_content": "<p>argue that maps and language are equally unreliable.</p>",
+        "correct": false
+      },
+      {
+        "id": 10066,
+        "sort_order": 1,
+        "choice_content": "<p>clarify that selection and omission are normal and not deceptive, yet still persuasive.</p>",
+        "correct": true
+      },
+      {
+        "id": 10067,
+        "sort_order": 2,
+        "choice_content": "<p>suggest that maps should be replaced by written descriptions.</p>",
+        "correct": false
+      },
+      {
+        "id": 10068,
+        "sort_order": 3,
+        "choice_content": "<p>prove that all forms of communication are meant to deceive.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "B",
+    "answer_content": "<p><strong>The solution is B.</strong> The analogy appears exactly where the author denies that maps are dishonest: like a sentence that selects and omits words, a map's selectivity is ordinary — \"it makes them rhetorical,\" not deceitful. A, C, and D all push the comparison toward distrust or replacement, which the paragraph resists.</p>"
+  },
+  {
+    "id": 1018,
+    "order": 18,
+    "passage_id": 9004,
+    "passageHtml": "<div class=\"reading-passage\"><p><strong>Passage 4 (5 questions)</strong></p><p>We are taught to think of a map as a picture of the world — more or less faithful, more or less detailed, but essentially a copy. The better the map, on this view, the more nearly it approaches the territory it depicts, until in the limit it would be a perfect miniature of the land itself. It is a comforting idea, and almost entirely wrong.</p><p>A map is not a copy of the world but an argument about it. Every map begins with subtraction: the cartographer must discard almost everything — the smell of the harbor, the noise of the street, the countless features too small or too transient to draw — and keep only what serves a purpose. What survives that discarding is never neutral. A road map erases the forest; a political map erases the road; a map of dialects erases both, and draws instead invisible boundaries no traveler could ever see. To make a map is to decide what is worth showing, and every such decision is a claim about what matters.</p><p>Consider the familiar wall map on which Greenland looms as large as Africa, though the continent is many times the island's size. The distortion is not a flaw to be apologized for but the price of a particular virtue: the projection preserves the angles a navigator needs to hold a compass course, and pays for that convenience in area. There is no map that lies about nothing, because there is no way to flatten a sphere without tearing it somewhere. Every projection tells the truth about certain relationships by lying about others, and the mapmaker's real choice is not whether to distort but which distortions to accept.</p><p>Once this is seen, the map's authority becomes harder to take for granted. The lines that look like simple observation — this nation ends here, this frontier is 'natural' — are assertions dressed as descriptions, and they shape how their readers imagine the world. A boundary drawn firmly on paper can come to seem inevitable, even where the ground beneath it is contested or the people it divides feel no division at all. The map does not merely record such facts; it helps to manufacture them, teaching generations to see as given what was in truth chosen.</p><p>None of this makes maps dishonest, any more than a sentence is dishonest for selecting some words and omitting others. It makes them rhetorical. A map persuades precisely by concealing that it is persuading, presenting a set of choices with the calm face of fact. To read a map well, then, is not to ask only where things are, but to ask what the map wants — what it includes, what it suppresses, and whose purposes its silent decisions serve.</p></div>",
+    "question_content": "<p>A reader who follows the author's advice to ask \"what the map wants\" would be most interested in:</p>",
+    "answer_choices": [
+      {
+        "id": 10069,
+        "sort_order": 0,
+        "choice_content": "<p>whether the map uses an attractive color scheme.</p>",
+        "correct": false
+      },
+      {
+        "id": 10070,
+        "sort_order": 1,
+        "choice_content": "<p>how many individual features the map manages to include.</p>",
+        "correct": false
+      },
+      {
+        "id": 10071,
+        "sort_order": 2,
+        "choice_content": "<p>which features the map omits and whose purposes its choices serve.</p>",
+        "correct": true
+      },
+      {
+        "id": 10072,
+        "sort_order": 3,
+        "choice_content": "<p>whether the map is physically larger than earlier maps.</p>",
+        "correct": false
+      }
+    ],
+    "correct_answer": "C",
+    "answer_content": "<p><strong>The solution is C.</strong> The closing lines define reading a map well as asking \"what it includes, what it suppresses, and whose purposes its silent decisions serve\" — i.e., attending to omission and interest. A and D are surface traits; B (sheer inclusiveness) is the copy-model the passage rejects.</p>"
+  },
+  {
+    "id": 1019,
+    "order": 19,
     "passage_id": null,
     "passageHtml": null,
     "question_content": "<p>A researcher finds that students who study in short, spaced sessions remember more a week later than students who study the same total time in one long session. This finding is best explained by:</p>",
     "answer_choices": [
-      { "id": 41, "sort_order": 0, "choice_content": "<p>the spacing effect.</p>", "correct": true },
-      { "id": 42, "sort_order": 1, "choice_content": "<p>the primacy effect.</p>", "correct": false },
-      { "id": 43, "sort_order": 2, "choice_content": "<p>state-dependent memory.</p>", "correct": false },
-      { "id": 44, "sort_order": 3, "choice_content": "<p>the mere-exposure effect.</p>", "correct": false }
+      {
+        "id": 10073,
+        "sort_order": 0,
+        "choice_content": "<p>the spacing effect.</p>",
+        "correct": true
+      },
+      {
+        "id": 10074,
+        "sort_order": 1,
+        "choice_content": "<p>the primacy effect.</p>",
+        "correct": false
+      },
+      {
+        "id": 10075,
+        "sort_order": 2,
+        "choice_content": "<p>state-dependent memory.</p>",
+        "correct": false
+      },
+      {
+        "id": 10076,
+        "sort_order": 3,
+        "choice_content": "<p>the mere-exposure effect.</p>",
+        "correct": false
+      }
     ],
     "correct_answer": "A",
-    "answer_content": "<p><strong>The solution is A.</strong></p><p>The spacing effect describes the finding that information studied across spaced sessions is retained better than the same amount of massed (single-session) study. The primacy effect concerns recall of early list items, state-dependent memory concerns matching internal states at encoding and retrieval, and the mere-exposure effect concerns preference from repeated exposure — none of which fits the described result.</p>"
+    "answer_content": "<p><strong>The solution is A.</strong> The spacing effect is the finding that information studied across spaced sessions is retained better than the same amount of massed (single-session) study. The primacy effect concerns recall of early list items; state-dependent memory concerns matching internal states at encoding and retrieval; the mere-exposure effect concerns preference from repeated exposure.</p>"
   }
 ]

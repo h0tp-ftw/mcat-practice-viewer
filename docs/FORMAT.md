@@ -64,4 +64,5 @@ viewer understands.
 A discrete (non-passage) question simply sets `"passageHtml": null` (or omits
 it) and `"passage_id": null`; the viewer keeps the two-pane layout and shows an
 "independent of a passage" note in the left pane. See
-[`../sample.json`](../sample.json) for a complete, working four-question example.
+[`../sample.json`](../sample.json) for a complete, working example set (several
+passages plus a discrete item).
